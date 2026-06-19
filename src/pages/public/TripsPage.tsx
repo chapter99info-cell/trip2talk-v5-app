@@ -1,0 +1,85 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useLang } from '../../hooks/useLang'
+import { fetchAllTours } from '../../lib/toursApi'
+import type { Tour, TripType } from '../../types/tour'
+import TripCard from '../../components/trips/TripCard'
+import { TripCardSkeleton } from '../../components/ui/Skeleton'
+import { PageError } from '../../components/ui/PageError'
+
+type Filter = 'all' | TripType
+
+export default function TripsPage() {
+  const { t } = useLang()
+  const [tours, setTours] = useState<Tour[]>([])
+  const [filter, setFilter] = useState<Filter>('all')
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  const load = useCallback(() => {
+    setLoading(true)
+    setError('')
+    fetchAllTours()
+      .then(setTours)
+      .catch(() => setError(t('common.error')))
+      .finally(() => setLoading(false))
+  }, [t])
+
+  useEffect(() => {
+    load()
+  }, [load])
+
+  const filtered = useMemo(() => {
+    if (filter === 'all') return tours
+    return tours.filter((tour) => tour.trip_type === filter)
+  }, [tours, filter])
+
+  const tabs: { id: Filter; label: string }[] = [
+    { id: 'all', label: t('common.all') },
+    { id: 'oneday', label: t('common.oneday') },
+    { id: 'overnight', label: t('common.overnight') },
+    { id: 'multiday', label: t('common.multiday') },
+  ]
+
+  return (
+    <div>
+      <h1 className="text-2xl font-bold text-brand-dark">{t('nav.trips')}</h1>
+
+      <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => setFilter(tab.id)}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
+              filter === tab.id ? 'bg-brand-green text-white' : 'bg-gray-100 text-gray-600'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {loading && (
+        <div className="mt-6 space-y-4">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <TripCardSkeleton key={i} />
+          ))}
+        </div>
+      )}
+
+      {error && !loading && (
+        <div className="mt-6">
+          <PageError message={error} onRetry={load} />
+        </div>
+      )}
+
+      {!loading && !error && (
+        <div className="mt-6 space-y-4">
+          {filtered.map((tour) => (
+            <TripCard key={tour.id} tour={tour} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
