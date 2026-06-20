@@ -7,6 +7,7 @@ import type { Tour } from '../../types/tour'
 import { HomeFeaturedSkeleton } from '../../components/ui/Skeleton'
 import { PageError } from '../../components/ui/PageError'
 import TripPhotoHero from '../../components/trips/TripPhotoHero'
+import TripBookButton from '../../components/trips/TripBookButton'
 
 export default function HomePage() {
   const { lang, t } = useLang()
@@ -84,24 +85,31 @@ export default function HomePage() {
             {featured.map((trip) => {
               const tripName = lang === 'th' ? trip.name_th : trip.name_en
               return (
-                <Link
+                <div
                   key={trip.id}
-                  to={`/trips/${trip.trip_code}`}
-                  className="flex overflow-hidden rounded-xl border border-gray-100 hover:border-brand-green/40"
+                  className="overflow-hidden rounded-xl border border-gray-100"
                 >
-                  <TripPhotoHero
-                    tripCode={trip.trip_code}
-                    alt={tripName}
-                    className="h-24 w-24 shrink-0 rounded-l-xl"
-                  />
-                  <div className="flex flex-1 flex-col justify-center p-3">
-                    <p className="text-xs text-brand-green">{trip.destination}</p>
-                    <p className="font-semibold text-brand-dark">{tripName}</p>
-                    <p className="text-sm text-gray-500">
-                      {trip.duration_label} · {formatAud(trip.price_standard)}
-                    </p>
+                  <Link
+                    to={`/trips/${trip.trip_code}`}
+                    className="flex hover:border-brand-green/40"
+                  >
+                    <TripPhotoHero
+                      tripCode={trip.trip_code}
+                      alt={tripName}
+                      className="h-24 w-24 shrink-0 rounded-l-xl"
+                    />
+                    <div className="flex flex-1 flex-col justify-center p-3">
+                      <p className="text-xs text-brand-green">{trip.destination}</p>
+                      <p className="font-semibold text-brand-dark">{tripName}</p>
+                      <p className="text-sm text-gray-500">
+                        {trip.duration_label} · {formatAud(trip.price_standard)}
+                      </p>
+                    </div>
+                  </Link>
+                  <div className="border-t border-gray-100 px-3 pb-3 pt-2">
+                    <TripBookButton tour={trip} />
                   </div>
-                </Link>
+                </div>
               )
             })}
           </div>

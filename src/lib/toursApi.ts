@@ -161,6 +161,15 @@ export function seatsRemaining(tour: Tour): number {
   return Math.max(0, tour.max_pax - tour.current_pax)
 }
 
+/** Bookable when CONFIRMED and seats remain (not PLANNING / full). */
+export function isTourBookable(tour: Tour): boolean {
+  const status = (tour.status ?? '').toUpperCase()
+  if (status === 'PLANNING' || status === 'CANCELLED') return false
+  if (status !== 'CONFIRMED') return false
+  if (tour.max_pax <= 0) return false
+  return tour.current_pax < tour.max_pax
+}
+
 export function formatAud(amount: number): string {
   return new Intl.NumberFormat('en-AU', {
     style: 'currency',

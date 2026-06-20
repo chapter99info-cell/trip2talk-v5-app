@@ -52,13 +52,12 @@ export default function GalleryPage() {
         <div className="mt-10 flex flex-col items-center rounded-2xl border border-dashed border-gray-200 bg-gray-50 px-6 py-12 text-center">
           <ImageOff className="h-10 w-10 text-gray-400" />
           <p className="mt-3 text-sm font-medium text-brand-dark">
-            {lang === 'th' ? 'กำลังย้ายรูปจาก V4' : 'Photos migrating from V4'}
+            {lang === 'th' ? 'ยังไม่มีรูปในแกลเลอรี' : 'No gallery photos yet'}
           </p>
-          <p className="mt-1 text-xs text-gray-500">
-            {lang === 'th'
-              ? 'TODO: วาง base64 ใน src/data/galleryPhotos.ts'
-              : 'TODO: paste base64 data into src/data/galleryPhotos.ts'}
-          </p>
+        </div>
+      ) : items.length === 0 ? (
+        <div className="mt-10 rounded-xl bg-gray-50 px-4 py-8 text-center text-sm text-gray-500">
+          {lang === 'th' ? 'ไม่มีรูปในหมวดนี้' : 'No photos in this category'}
         </div>
       ) : (
         <div className="mt-6 columns-2 gap-3 md:columns-3 lg:columns-4">

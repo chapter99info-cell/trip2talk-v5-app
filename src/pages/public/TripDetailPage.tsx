@@ -9,6 +9,7 @@ import type { Tour } from '../../types/tour'
 import { Skeleton } from '../../components/ui/Skeleton'
 import { PageError } from '../../components/ui/PageError'
 import TripPhotoHero from '../../components/trips/TripPhotoHero'
+import TripBookButton from '../../components/trips/TripBookButton'
 
 export default function TripDetailPage() {
   const { tripCode } = useParams<{ tripCode: string }>()
@@ -146,12 +147,7 @@ export default function TripDetailPage() {
         )}
       </div>
 
-      <Link
-        to={`/waiver?trip=${tour.trip_code}`}
-        className="block w-full rounded-xl bg-brand-green py-3.5 text-center text-sm font-semibold text-white hover:bg-brand-green/90"
-      >
-        {t('btn.bookNow')}
-      </Link>
+      <TripBookButton tour={tour} className="py-3.5" />
     </div>
   )
 }

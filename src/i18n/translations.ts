@@ -10,7 +10,7 @@ export type TranslationKey =
   | 'nav.portal'
   | 'btn.bookNow'
   | 'btn.viewTrip'
-  | 'btn.readReviews'
+  | 'btn.comingSoon'
   | 'btn.submit'
   | 'btn.copy'
   | 'btn.copied'
@@ -58,6 +58,10 @@ export type TranslationKey =
   | 'home.audience.couples'
   | 'home.audience.groups'
   | 'pricing.compare'
+  | 'about.positioning'
+  | 'about.destinations'
+  | 'about.oshc'
+  | 'about.contact'
   | 'about.crew'
   | 'about.tips'
   | 'waiver.title'
@@ -88,7 +92,7 @@ const en: Map = {
   'nav.portal': 'Portal',
   'btn.bookNow': 'Book Now',
   'btn.viewTrip': 'View Trip',
-  'btn.readReviews': 'Read Reviews',
+  'btn.comingSoon': 'Coming soon',
   'btn.submit': 'Submit Booking',
   'btn.copy': 'Copy',
   'btn.copied': 'Copied!',
@@ -136,7 +140,11 @@ const en: Map = {
   'home.audience.couples': 'Couples',
   'home.audience.groups': 'Friend Groups',
   'pricing.compare': 'Standard vs Private',
-  'about.crew': 'Meet the Crew',
+  'about.positioning': 'Who we are',
+  'about.destinations': 'Where we go',
+  'about.oshc': 'OSHC & visa support',
+  'about.contact': 'Contact',
+  'about.crew': 'Meet Saen',
   'about.tips': 'Insider Tips — Aurora Hunting',
   'waiver.title': 'Digital Waiver',
   'waiver.signName': 'Type your full name as digital signature',
@@ -165,7 +173,7 @@ const th: Map = {
   'nav.portal': 'พอร์ทัล',
   'btn.bookNow': 'จองเลย',
   'btn.viewTrip': 'ดูทริป',
-  'btn.readReviews': 'อ่านรีวิว',
+  'btn.comingSoon': 'เร็วๆ นี้',
   'btn.submit': 'ส่งการจอง',
   'btn.copy': 'คัดลอก',
   'btn.copied': 'คัดลอกแล้ว!',
@@ -213,7 +221,11 @@ const th: Map = {
   'home.audience.couples': 'คู่รัก',
   'home.audience.groups': 'กลุ่มเพื่อน',
   'pricing.compare': 'เปรียบเทียบ Standard vs Private',
-  'about.crew': 'ทีมงานของเรา',
+  'about.positioning': 'เราคือใคร',
+  'about.destinations': 'จุดหมายของเรา',
+  'about.oshc': 'OSHC และวีซ่า',
+  'about.contact': 'ติดต่อ',
+  'about.crew': 'พบกับ Saen',
   'about.tips': 'เคล็ดลับ — ล่าแสงออโรร่า',
   'waiver.title': 'ข้อตกลงดิจิทัล',
   'waiver.signName': 'พิมพ์ชื่อ-นามสกุลเป็นลายเซ็นดิจิทัล',

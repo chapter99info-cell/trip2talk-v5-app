@@ -5,7 +5,6 @@ import { useLang } from '../../hooks/useLang'
 import InstallPrompt from '../InstallPrompt'
 
 const menuLinks = [
-  { to: '/', key: 'nav.home' as const, end: true },
   { to: '/trips', key: 'nav.trips' as const },
   { to: '/gallery', key: 'nav.gallery' as const },
   { to: '/calendar', key: 'nav.calendar' as const },
@@ -32,6 +31,22 @@ export default function PublicLayout() {
             Trip2Talk
           </Link>
 
+          <nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
+            {menuLinks.map(({ to, key }) => (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) =>
+                  `rounded-lg px-2.5 py-1.5 text-xs font-medium ${
+                    isActive ? 'bg-brand-green-light text-brand-green' : 'text-gray-600 hover:text-brand-dark'
+                  }`
+                }
+              >
+                {t(key)}
+              </NavLink>
+            ))}
+          </nav>
+
           <button
             type="button"
             onClick={toggleLang}
@@ -53,11 +68,10 @@ export default function PublicLayout() {
         {menuOpen && (
           <nav className="border-t border-gray-100 px-4 py-3 md:hidden">
             <ul className="space-y-1">
-              {menuLinks.map(({ to, key, end }) => (
+              {menuLinks.map(({ to, key }) => (
                 <li key={to}>
                   <NavLink
                     to={to}
-                    end={end}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
                       `block rounded-lg px-3 py-2 text-sm ${

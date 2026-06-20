@@ -4,6 +4,7 @@ import type { Tour } from '../../types/tour'
 import { useLang } from '../../hooks/useLang'
 import { formatAud, seatsRemaining } from '../../lib/toursApi'
 import TripPhotoHero from './TripPhotoHero'
+import TripBookButton from './TripBookButton'
 
 type Props = {
   tour: Tour
@@ -68,13 +69,9 @@ export default function TripCard({ tour }: Props) {
         </div>
       </Link>
 
-      <div className="px-4 pb-4">
-        <Link
-          to={`/trips/${tour.trip_code}`}
-          className="block w-full rounded-xl bg-brand-green py-2.5 text-center text-sm font-semibold text-white hover:bg-brand-green/90"
-        >
-          {t('btn.viewTrip')}
-        </Link>
+      <div className="grid grid-cols-2 gap-2 px-4 pb-4">
+        <TripBookButton tour={tour} detailOnly className="py-2.5" />
+        <TripBookButton tour={tour} className="py-2.5" />
       </div>
     </article>
   )
