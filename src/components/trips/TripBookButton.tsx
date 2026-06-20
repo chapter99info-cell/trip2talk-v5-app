@@ -6,21 +6,23 @@ import { isTourBookable } from '../../lib/toursApi'
 type Props = {
   tour: Tour
   className?: string
-  /** When true, links to trip detail instead of waiver (for card secondary action) */
+  variant?: 'primary' | 'ghost' | 'deep'
   detailOnly?: boolean
 }
 
-export default function TripBookButton({ tour, className = '', detailOnly = false }: Props) {
+export default function TripBookButton({
+  tour,
+  className = '',
+  variant = 'primary',
+  detailOnly = false,
+}: Props) {
   const { t } = useLang()
   const bookable = isTourBookable(tour)
-
-  const base =
-    'block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-colors '
 
   if (!bookable) {
     return (
       <span
-        className={`${base} cursor-not-allowed bg-gray-200 text-gray-500 ${className}`}
+        className={`block w-full rounded-editorial bg-cream-muted/30 py-2.5 text-center text-xs font-medium uppercase tracking-wider text-cream-muted ${className}`}
         aria-disabled
       >
         {t('btn.comingSoon')}
@@ -29,13 +31,21 @@ export default function TripBookButton({ tour, className = '', detailOnly = fals
   }
 
   const to = detailOnly ? `/trips/${tour.trip_code}` : `/waiver?trip=${tour.trip_code}`
+  const label = detailOnly ? t('btn.viewTrip') : t('btn.bookNow')
+
+  const styles =
+    variant === 'ghost'
+      ? 'border border-white/35 bg-transparent text-cream hover:border-white/55'
+      : variant === 'deep'
+        ? 'bg-deep-green text-cream hover:bg-deep-green/90'
+        : 'bg-gold text-gold-dark hover:opacity-90'
 
   return (
     <Link
       to={to}
-      className={`${base} bg-brand-green text-white hover:bg-brand-green/90 ${className}`}
+      className={`block w-full rounded-editorial py-2.5 text-center text-xs font-medium uppercase tracking-[0.5px] transition-colors ${styles} ${className}`}
     >
-      {detailOnly ? t('btn.viewTrip') : t('btn.bookNow')}
+      {label}
     </Link>
   )
 }

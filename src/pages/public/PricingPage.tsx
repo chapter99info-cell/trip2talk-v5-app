@@ -28,14 +28,14 @@ export default function PricingPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-brand-dark">{t('nav.pricing')}</h1>
+      <h1 className="font-serif text-2xl text-brand-dark">{t('nav.pricing')}</h1>
 
       <section>
         <h2 className="text-lg font-semibold text-brand-dark">{t('pricing.compare')}</h2>
         <div className="mt-4 grid gap-4 sm:grid-cols-2">
           {tiers.map((tier) => (
             <div key={tier.name} className="rounded-2xl border border-gray-100 p-5">
-              <h3 className="text-lg font-bold text-brand-green">{tier.name}</h3>
+              <h3 className="font-serif text-lg text-gold-dark">{tier.name}</h3>
               <p className="mt-1 text-sm font-medium text-brand-dark">{tier.pax}</p>
               <p className="mt-2 text-sm text-gray-600">{tier.desc}</p>
               <p className="mt-3 text-sm font-semibold text-brand-dark">{tier.price}</p>

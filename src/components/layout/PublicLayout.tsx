@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Calendar, Home, Image, Lock, Menu, X } from 'lucide-react'
 import { useLang } from '../../hooks/useLang'
 import InstallPrompt from '../InstallPrompt'
@@ -22,12 +22,14 @@ const bottomNav = [
 export default function PublicLayout() {
   const { t, toggleLang } = useLang()
   const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
   return (
-    <div className="flex min-h-svh flex-col bg-white">
-      <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/95 backdrop-blur">
+    <div className={`flex min-h-svh flex-col ${isHome ? 'bg-near-black-green' : 'bg-cream'}`}>
+      <header className="sticky top-0 z-50 border-b border-white/8 bg-near-black-green/95 backdrop-blur">
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3">
-          <Link to="/" className="text-lg font-bold text-brand-green">
+          <Link to="/" className="font-serif text-lg font-semibold text-cream">
             Trip2Talk
           </Link>
 
@@ -37,8 +39,8 @@ export default function PublicLayout() {
                 key={to}
                 to={to}
                 className={({ isActive }) =>
-                  `rounded-lg px-2.5 py-1.5 text-xs font-medium ${
-                    isActive ? 'bg-brand-green-light text-brand-green' : 'text-gray-600 hover:text-brand-dark'
+                  `rounded-editorial px-2.5 py-1.5 text-xs font-medium uppercase tracking-wider ${
+                    isActive ? 'text-gold' : 'text-cream-muted hover:text-cream'
                   }`
                 }
               >
@@ -50,7 +52,7 @@ export default function PublicLayout() {
           <button
             type="button"
             onClick={toggleLang}
-            className="rounded-full border border-brand-green/30 bg-brand-green-light px-3 py-1 text-xs font-medium text-brand-green"
+            className="rounded-editorial border border-gold/40 px-3 py-1 text-xs font-medium text-gold"
           >
             {t('lang.toggle')}
           </button>
@@ -58,7 +60,7 @@ export default function PublicLayout() {
           <button
             type="button"
             onClick={() => setMenuOpen((o) => !o)}
-            className="rounded-lg p-2 text-brand-dark hover:bg-gray-100"
+            className="rounded-editorial p-2 text-cream hover:bg-white/5"
             aria-label="Menu"
           >
             {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -66,7 +68,7 @@ export default function PublicLayout() {
         </div>
 
         {menuOpen && (
-          <nav className="border-t border-gray-100 px-4 py-3 md:hidden">
+          <nav className="border-t border-white/8 px-4 py-3 md:hidden">
             <ul className="space-y-1">
               {menuLinks.map(({ to, key }) => (
                 <li key={to}>
@@ -74,8 +76,8 @@ export default function PublicLayout() {
                     to={to}
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
-                      `block rounded-lg px-3 py-2 text-sm ${
-                        isActive ? 'bg-brand-green-light font-medium text-brand-green' : 'text-brand-dark'
+                      `block rounded-editorial px-3 py-2 text-sm ${
+                        isActive ? 'font-medium text-gold' : 'text-cream-muted'
                       }`
                     }
                   >
@@ -88,11 +90,15 @@ export default function PublicLayout() {
         )}
       </header>
 
-      <main className="mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-4">
+      <main
+        className={`mx-auto w-full max-w-2xl flex-1 px-4 pb-24 pt-4 ${
+          isHome ? 'text-cream' : 'text-brand-dark'
+        }`}
+      >
         <Outlet />
       </main>
 
-      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-100 bg-white/95 backdrop-blur">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/8 bg-near-black-green/95 backdrop-blur">
         <div className="mx-auto flex max-w-2xl items-center justify-around px-2 py-2">
           {bottomNav.map(({ to, icon: Icon, key, end }) => (
             <NavLink
@@ -100,8 +106,8 @@ export default function PublicLayout() {
               to={to}
               end={end}
               className={({ isActive }) =>
-                `flex flex-col items-center gap-0.5 rounded-lg px-3 py-1 text-[10px] ${
-                  isActive ? 'text-brand-green' : 'text-gray-500'
+                `flex flex-col items-center gap-0.5 rounded-editorial px-3 py-1 text-[10px] uppercase tracking-wider ${
+                  isActive ? 'text-gold' : 'text-cream-muted'
                 }`
               }
             >
@@ -113,6 +119,20 @@ export default function PublicLayout() {
       </nav>
 
       <InstallPrompt />
+
+      <footer className="border-t border-white/8 bg-near-black-green px-4 pb-24 pt-4 text-center text-[10px] text-cream-muted">
+        <p>Trip2Talk · Chapter 99 Photography</p>
+        <p className="mt-1">33/14 Jubilee Ave, Warriewood NSW 2102 · ABN 81 951 461 769</p>
+        <p className="mt-1">
+          <a href="mailto:trip2talksyd@gmail.com" className="text-gold hover:underline">
+            trip2talksyd@gmail.com
+          </a>
+          {' · '}
+          <a href="tel:+61452044382" className="text-gold hover:underline">
+            +61 0452 044 382
+          </a>
+        </p>
+      </footer>
     </div>
   )
 }

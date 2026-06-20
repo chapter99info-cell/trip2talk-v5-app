@@ -1,3 +1,37 @@
+export const JETSTAR_RESTRICTIONS = {
+  en: {
+    title: 'Jetstar carry-on rules',
+    items: [
+      'Power banks must be carried in cabin baggage only — never in checked luggage',
+      'Liquids in carry-on limited to 100ml per container (standard aviation security)',
+      'Oversized tripods may need to be checked — contact Trip2Talk before departure',
+    ],
+  },
+  th: {
+    title: 'ข้อห้าม Jetstar',
+    items: [
+      'Power bank ต้องถือขึ้นเครื่องเท่านั้น — ห้ามใส่กระเป๋าเช็คอิน',
+      'ของเหลวในสัมภาระถือขึ้นเครื่อง ไม่เกิน 100ml ต่อชิ้น',
+      'ขาตั้งกล้องขนาดใหญ่อาจต้องเช็คอิน — แจ้ง Trip2Talk ก่อนเดินทาง',
+    ],
+  },
+}
+
+export const BAGGAGE_INFO = {
+  en: {
+    title: 'Baggage allowance',
+    checked: 'Checked baggage: 20kg',
+    carryOn: 'Carry-on: 7kg',
+    airline: 'All Trip2Talk flights operate on Jetstar',
+  },
+  th: {
+    title: 'น้ำหนักสัมภาระ',
+    checked: 'โหลด 20kg',
+    carryOn: 'ถือขึ้น 7kg',
+    airline: 'เที่ยวบินทุกทริปใช้ Jetstar',
+  },
+}
+
 export const CANCELLATION_POLICY = {
   en: {
     title: 'Cancellation & Refund Policy',

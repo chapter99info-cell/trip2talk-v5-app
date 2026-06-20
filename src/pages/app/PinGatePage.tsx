@@ -110,12 +110,12 @@ export default function PinGatePage() {
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'] as const
 
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center bg-neutral-950 px-4">
-      <div className="rounded-full bg-neutral-900 p-4 ring-1 ring-neutral-800">
-        <Lock className="h-8 w-8 text-amber-400" />
+    <div className="flex min-h-svh flex-col items-center justify-center bg-near-black-green px-4">
+      <div className="rounded-full bg-surface-card p-4 ring-1 ring-white/10">
+        <Lock className="h-8 w-8 text-gold" />
       </div>
-      <h1 className="mt-5 text-xl font-semibold text-white">Staff Portal</h1>
-      <p className="mt-1 text-sm text-neutral-400">Enter 4-digit PIN</p>
+      <h1 className="mt-5 font-serif text-xl text-cream">Staff Portal</h1>
+      <p className="mt-1 text-sm text-cream-muted">Enter 4-digit PIN</p>
 
       <form onSubmit={handleSubmit} className="mt-8 w-full max-w-xs">
         <div className="flex justify-center gap-4">
@@ -123,7 +123,7 @@ export default function PinGatePage() {
             <div
               key={i}
               className={`h-3.5 w-3.5 rounded-full transition-all duration-200 ${
-                pin.length > i ? 'scale-110 bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.6)]' : 'bg-neutral-700'
+                pin.length > i ? 'scale-110 bg-gold shadow-[0_0_8px_rgba(212,168,83,0.6)]' : 'bg-white/20'
               }`}
             />
           ))}
@@ -134,9 +134,9 @@ export default function PinGatePage() {
         )}
 
         {isLocked && (
-          <div className="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-center">
-            <p className="text-sm text-amber-400">{t('pin.locked')}</p>
-            <p className="mt-1 font-mono text-2xl font-bold text-amber-400">{lockSeconds}s</p>
+          <div className="mt-4 rounded-editorial border border-gold/30 bg-gold/10 px-4 py-3 text-center">
+            <p className="text-sm text-gold">{t('pin.locked')}</p>
+            <p className="mt-1 font-serif text-2xl font-bold text-gold">{lockSeconds}s</p>
           </div>
         )}
 
@@ -147,10 +147,10 @@ export default function PinGatePage() {
               type="button"
               disabled={!key || isLocked || loading}
               onClick={() => key && pressKey(key)}
-              className={`rounded-2xl py-4 text-lg font-medium transition-all duration-150 disabled:invisible ${
+              className={`rounded-editorial py-4 text-lg font-medium transition-all duration-150 disabled:invisible ${
                 activeKey === key
-                  ? 'scale-95 bg-amber-400 text-neutral-950 shadow-lg shadow-amber-400/30'
-                  : 'bg-neutral-900 text-white hover:bg-neutral-800 active:scale-95'
+                  ? 'scale-95 bg-gold text-gold-dark shadow-lg shadow-gold/30'
+                  : 'bg-surface-card text-cream hover:bg-deep-green active:scale-95'
               }`}
             >
               {key === 'back' ? '⌫' : key}

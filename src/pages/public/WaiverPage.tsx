@@ -62,7 +62,7 @@ export default function WaiverPage() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div>
-        <h1 className="text-2xl font-bold text-brand-dark">{t('waiver.title')}</h1>
+        <h1 className="font-serif text-2xl text-brand-dark">{t('waiver.title')}</h1>
         <p className="mt-1 text-sm text-gray-500">{tripCode}</p>
       </div>
 
@@ -114,7 +114,7 @@ export default function WaiverPage() {
       <button
         type="submit"
         disabled={!isValid || submitting}
-        className="w-full rounded-xl bg-brand-green py-3 text-sm font-semibold text-white disabled:opacity-40"
+        className="btn-primary w-full disabled:opacity-40"
       >
         {submitting ? t('common.loading') : t('btn.submit')}
       </button>

@@ -3,6 +3,7 @@ import PublicLayout from './components/layout/PublicLayout'
 import HomePage from './pages/public/HomePage'
 import TripsPage from './pages/public/TripsPage'
 import TripDetailPage from './pages/public/TripDetailPage'
+import TripPrepPage from './pages/public/TripPrepPage'
 import CalendarPage from './pages/public/CalendarPage'
 import GalleryPage from './pages/public/GalleryPage'
 import PricingPage from './pages/public/PricingPage'
@@ -22,6 +23,7 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="trips" element={<TripsPage />} />
           <Route path="trips/:tripCode" element={<TripDetailPage />} />
+          <Route path="trips/:tripCode/prep" element={<TripPrepPage />} />
           <Route path="calendar" element={<CalendarPage />} />
           <Route path="gallery" element={<GalleryPage />} />
           <Route path="pricing" element={<PricingPage />} />

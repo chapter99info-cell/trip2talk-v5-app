@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Flame, Sparkles } from 'lucide-react'
+import { Flame } from 'lucide-react'
 import type { Tour } from '../../types/tour'
 import { useLang } from '../../hooks/useLang'
 import { formatAud, seatsRemaining } from '../../lib/toursApi'
@@ -10,68 +10,57 @@ type Props = {
   tour: Tour
 }
 
+function tripBadge(tour: Tour, lang: 'en' | 'th'): string | null {
+  if (tour.aurora_trip) return lang === 'th' ? 'ล่าแสงใต้' : 'Aurora hunt'
+  if (tour.trip_code === 'SYD-INFLU-3H') return lang === 'th' ? 'อินฟลูเอนเซอร์' : 'Influencer'
+  if (tour.trip_code === 'NZ-6D5N') return lang === 'th' ? 'ทริปไฮไลท์' : 'Flagship'
+  if (tour.trip_type === 'multiday' && tour.price_standard >= 1500) {
+    return lang === 'th' ? 'ทริปพรีเมียม' : 'Premium'
+  }
+  return null
+}
+
 export default function TripCard({ tour }: Props) {
-  const { lang, t } = useLang()
+  const { lang } = useLang()
   const name = lang === 'th' ? tour.name_th : tour.name_en
   const seats = seatsRemaining(tour)
   const lowSeats = seats > 0 && seats <= 3
+  const badge = tripBadge(tour, lang)
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
-      <Link to={`/trips/${tour.trip_code}`} className="block">
+    <article className="group relative min-h-[22rem] overflow-hidden rounded-editorial">
+      <Link to={`/trips/${tour.trip_code}`} className="absolute inset-0 block">
         <TripPhotoHero
           tripCode={tour.trip_code}
           alt={name}
-          className="aspect-[16/9] w-full"
+          className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="flex items-start justify-between gap-2 bg-brand-green-light px-4 py-3">
-          <span className="rounded-full bg-white px-2 py-0.5 text-xs font-medium text-brand-green">
-            {tour.destination}
-          </span>
-          {tour.aurora_trip && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-brand-green px-2 py-0.5 text-xs text-white">
-              <Sparkles className="h-3 w-3" />
-              {t('common.aurora')}
-            </span>
-          )}
-        </div>
-
-        <div className="space-y-3 p-4">
-          <div>
-            <p className="text-xs font-mono text-gray-400">{tour.trip_code}</p>
-            <h3 className="mt-1 text-base font-semibold leading-snug text-brand-dark">{name}</h3>
-            <p className="text-sm text-gray-500">{tour.duration_label}</p>
-          </div>
-
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-xs text-gray-500">{t('common.fromPrice')}</p>
-              <p className="text-lg font-bold text-brand-green">{formatAud(tour.price_standard)}</p>
-              {tour.price_private != null && (
-                <p className="text-xs text-gray-500">
-                  {t('common.private')}: {formatAud(tour.price_private)}
-                </p>
-              )}
-            </div>
-            <div className="text-right text-sm">
-              {seats === 0 ? (
-                <span className="font-medium text-red-600">{t('common.full')}</span>
-              ) : (
-                <span
-                  className={`inline-flex items-center gap-1 ${lowSeats ? 'font-medium text-orange-600' : 'text-gray-600'}`}
-                >
-                  {lowSeats && <Flame className="h-4 w-4" />}
-                  {seats} {t('common.seatsRemaining')}
-                </span>
-              )}
-            </div>
-          </div>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
       </Link>
 
-      <div className="grid grid-cols-2 gap-2 px-4 pb-4">
-        <TripBookButton tour={tour} detailOnly className="py-2.5" />
-        <TripBookButton tour={tour} className="py-2.5" />
+      {badge && (
+        <span className="absolute left-3 top-3 z-10 rounded-editorial bg-gold px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-gold-dark">
+          {badge}
+        </span>
+      )}
+
+      <span className="absolute right-3 top-3 z-10 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-medium text-brand-dark shadow-sm">
+        {seats === 0 ? (lang === 'th' ? 'เต็ม' : 'Full') : `${seats} ${lang === 'th' ? 'ที่นั่ง' : 'seats'}`}
+        {lowSeats && seats > 0 && <Flame className="ml-1 inline h-3 w-3 text-coral" />}
+      </span>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 p-4 pb-[4.5rem]">
+        <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-cream-muted">
+          {tour.destination}
+        </p>
+        <h3 className="mt-1 font-serif text-xl leading-tight text-cream">{name}</h3>
+        <p className="mt-1 font-serif text-lg text-gold">{formatAud(tour.price_standard)}</p>
+        <p className="text-xs text-cream-muted">{tour.duration_label}</p>
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 z-20 grid grid-cols-2 gap-2 p-3">
+        <TripBookButton tour={tour} detailOnly variant="ghost" className="py-2.5" />
+        <TripBookButton tour={tour} variant="primary" className="py-2.5" />
       </div>
     </article>
   )

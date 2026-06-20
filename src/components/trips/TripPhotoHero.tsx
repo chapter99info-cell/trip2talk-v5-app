@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { getHeroPhotoForTrip, photoSrc } from '../../data/galleryPhotos'
 
 type Props = {
@@ -8,12 +9,13 @@ type Props = {
 
 /** Hero/thumbnail from gallery base64, or brand gradient fallback */
 export default function TripPhotoHero({ tripCode, alt, className = '' }: Props) {
-  const photo = getHeroPhotoForTrip(tripCode)
+  const photo = useMemo(() => getHeroPhotoForTrip(tripCode), [tripCode])
+  const src = useMemo(() => (photo ? photoSrc(photo) : ''), [photo])
 
   if (photo) {
     return (
       <img
-        src={photoSrc(photo)}
+        src={src}
         alt={alt}
         loading="lazy"
         className={`object-cover ${className}`}

@@ -9,118 +9,150 @@ export type TripDetailContent = {
 }
 
 export const TRIP_DETAILS: Record<string, TripDetailContent> = {
+  'SYD-INFLU-3H': {
+    tagline: {
+      en: 'Level-up your Sydney feed — 5 curated North & South locations, pro photographer, 3-hour session.',
+      th: 'เก็บภาพสุดปังในซิดนีย์ด้วยแพ็กเกจถ่ายภาพสำหรับอินฟลูเอนเซอร์',
+    },
+    highlights: {
+      en: [
+        '5 curated locations across Sydney North & South',
+        'Professional local photographer',
+        '3-hour session with unlimited outfit changes',
+        'Hotel pickup & drop-off',
+        'Unlimited photos with colour grading',
+        'Delivered via online album',
+      ],
+      th: [
+        '5 จุดถ่ายคัดสรรทั่วซิดนีย์ฝั่งเหนือและใต้',
+        'ช่างภาพท้องถิ่นมืออาชีพ',
+        'เซสชัน 3 ชั่วโมง เปลี่ยนชุดได้ไม่จำกัด',
+        'รับ-ส่งที่โรงแรม',
+        'ภาพไม่จำกัดพร้อมแต่งสี',
+        'ส่งงานผ่านออนไลน์อัลบั้ม',
+      ],
+    },
+    includes: {
+      en: ['Professional local photographer', 'Hotel pickup & drop-off', 'Unlimited photos with colour grading'],
+      th: ['ช่างภาพท้องถิ่นมืออาชีพ', 'รับ-ส่งโรงแรม', 'ภาพไม่จำกัดพร้อมแต่งสี'],
+    },
+    excludes: {
+      en: ['Personal travel costs', 'Food and drinks'],
+      th: ['ค่าเดินทางส่วนตัว', 'อาหารและเครื่องดื่ม'],
+    },
+  },
   'MEL-4D3N': {
     tagline: {
-      en: 'Four seasons in one city — Great Ocean Road golden hour to Pink Lake Milky Way.',
-      th: 'สี่ฤดูในเมืองเดียว — จาก Great Ocean Road ยาม Golden Hour ถึง Pink Lake กับทางช้างเผือก',
+      en: 'Melbourne & Great Ocean Road handled end-to-end — Twelve Apostles to Pink Lake. Pack your bag; we arrange flights and stays.',
+      th: 'เมลเบิร์น & Great Ocean Road ครบวงจร — Twelve Apostles ถึง Pink Lake จองตั๋วและที่พักให้ แค่จัดกระเป๋าแล้วมา',
     },
     highlights: {
       en: ['Great Ocean Road & Twelve Apostles', 'Pink Lake reflections', 'Melbourne city street art'],
       th: ['Great Ocean Road & Twelve Apostles', 'ทะเลสาบสีชมพูสะท้อนแสง', 'สตรีทอาร์ตเมลเบิร์นซิตี้'],
     },
     includes: {
-      en: ['SUV with driver & fuel', 'Pro photographer mentor', 'Park entry fees', 'Flight booking assistance'],
-      th: ['รถ SUV พร้อมคนขับและน้ำมัน', 'ช่างภาพ Mentor', 'ค่าเข้าอุทยาน', 'ช่วยจองตั๋วเครื่องบิน'],
+      en: ['SUV with driver & fuel', 'Pro photographer mentor', 'Park entry fees', 'Flight & accommodation booking assistance'],
+      th: ['รถ SUV พร้อมคนขับและน้ำมัน', 'ช่างภาพ Mentor', 'ค่าเข้าอุทยาน', 'ช่วยจองตั๋วเครื่องบินและที่พัก'],
     },
     excludes: {
-      en: ['Flights SYD↔MEL', 'All meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบินไป-กลับ', 'ค่าอาหารทุกมื้อ', 'ประกันการเดินทาง'],
+      en: ['Flights SYD↔MEL (we coordinate booking)', 'All meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบินไป-กลับ (เราช่วยจอง)', 'ค่าอาหารทุกมื้อ', 'ประกันการเดินทาง'],
     },
   },
   'ULU-4D3N': {
     tagline: {
-      en: 'Red desert odyssey — Uluru sunrise, Field of Light, and Milky Way skies.',
-      th: 'ดินแดนทะเลทรายแดง — พระอาทิตย์ขึ้นอุลูรู Field of Light และท้องฟ้าเต็มดาว',
+      en: 'Uluru odyssey, zero logistics stress — flights, lodge & park passes coordinated. You focus on the shots.',
+      th: 'ตะลุยอุลูรู ไม่ต้องยุ่งเรื่องจอง — ตั๋วเครื่องบิน ที่พัก และอุทยานเราประสานให้ คุณโฟกัสแค่ถ่ายภาพ',
     },
     highlights: {
       en: ['Uluru sunrise & sunset', 'Field of Light installation', 'Kata Tjuta (The Olgas)'],
       th: ['พระอาทิตย์ขึ้นและตกที่อุลูรู', 'Field of Light', 'Kata Tjuta (The Olgas)'],
     },
     includes: {
-      en: ['Vehicle & driver', 'Outback lodge accommodation', 'Uluru-Kata Tjuta park pass', 'Field of Light ticket'],
-      th: ['รถและคนขับ', 'ที่พัก Outback Lodge', 'ตั๋วอุทยาน Uluru-Kata Tjuta', 'ตั๋ว Field of Light'],
+      en: ['Vehicle & driver', 'Outback lodge accommodation (we coordinate booking)', 'Uluru-Kata Tjuta park pass', 'Field of Light ticket', 'Flight booking assistance'],
+      th: ['รถและคนขับ', 'ที่พัก Outback Lodge (เราช่วยจอง)', 'ตั๋วอุทยาน Uluru-Kata Tjuta', 'ตั๋ว Field of Light', 'ช่วยจองตั๋วเครื่องบิน'],
     },
     excludes: {
-      en: ['Flights', 'Meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบิน', 'ค่าอาหาร', 'ประกันการเดินทาง'],
+      en: ['Flights (we coordinate booking)', 'Meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบิน (เราช่วยจอง)', 'ค่าอาหาร', 'ประกันการเดินทาง'],
     },
   },
   'NZ-6D5N': {
     tagline: {
-      en: 'The ultimate South Island photo journey — Milford Sound to Lake Tekapo stars.',
-      th: 'ทริปถ่ายภาพ South Island สุดพิเศษ — จาก Milford Sound ถึงดาวที่ Lake Tekapo',
+      en: 'South Island flagship — 6 days, every detail arranged. Flights, stays & Milford Sound; just arrive and shoot.',
+      th: 'ทริปไฮไลท์ South Island 6 วัน — จัดทุกอย่างครบ ตั๋วเที่ยวบิน ที่พัก Milford Sound ถึงแล้วถ่ายรูปได้เลย',
     },
     highlights: {
       en: ['Lake Tekapo & Church of the Good Shepherd', 'Milford Sound fiord cruise', 'Queenstown & Southern Alps'],
       th: ['Lake Tekapo & Church of the Good Shepherd', 'ล่องเรือ Milford Sound', 'Queenstown & Southern Alps'],
     },
     includes: {
-      en: ['SUV & driver 6 days', '5 nights accommodation', 'Milford Sound cruise', 'Pro photographer'],
-      th: ['รถ SUV & คนขับ 6 วัน', 'ที่พัก 5 คืน', 'Milford Sound cruise', 'ช่างภาพมืออาชีพ'],
+      en: ['SUV & driver 6 days', '5 nights accommodation (we coordinate booking)', 'Milford Sound cruise', 'Pro photographer', 'Flight booking assistance'],
+      th: ['รถ SUV & คนขับ 6 วัน', 'ที่พัก 5 คืน (เราช่วยจอง)', 'Milford Sound cruise', 'ช่างภาพมืออาชีพ', 'ช่วยจองตั๋วเครื่องบิน'],
     },
     excludes: {
-      en: ['International/domestic flights', 'Meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบิน', 'ค่าอาหาร', 'ประกันการเดินทาง'],
+      en: ['International/domestic flights (we coordinate booking)', 'Meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบิน (เราช่วยจอง)', 'ค่าอาหาร', 'ประกันการเดินทาง'],
     },
   },
   'TAS-3D2N': {
     tagline: {
-      en: 'Hobart mini aurora hunt — history, art, and southern lights on Mt Wellington.',
-      th: 'ล่าแสงใต้ที่ Hobart — ประวัติศาสตร์ ศิลปะ และแสงออโรร่าบน Mt Wellington',
+      en: 'Arrive in Hobart, we handle the rest — aurora hunts, Bruny Island, MONA. Just pack and go.',
+      th: 'ถึงโฮบาร์ตแล้วที่เหลือเราจัดให้ — ล่าแสงใต้ Bruny Island MONA แค่จัดกระเป๋าแล้วมา',
     },
     highlights: {
       en: ['Mt Wellington aurora hunt', 'Bruny Island full day', 'MONA & Hobart waterfront'],
       th: ['ล่าแสงใต้ Mt Wellington', 'Bruny Island เต็มวัน', 'MONA & ริมน้ำ Hobart'],
     },
     includes: {
-      en: ['Private SUV & driver', 'Pro photographer', 'Park entries', 'Flight coordination'],
-      th: ['รถ SUV ส่วนตัว & คนขับ', 'ช่างภาพมืออาชีพ', 'ค่าเข้าสถานที่', 'ประสานงานตั๋วเครื่องบิน'],
+      en: ['Private SUV & driver', 'Pro photographer', 'Park entries', 'Flight & accommodation booking assistance'],
+      th: ['รถ SUV ส่วนตัว & คนขับ', 'ช่างภาพมืออาชีพ', 'ค่าเข้าสถานที่', 'ช่วยจองตั๋วเครื่องบินและที่พัก'],
     },
     excludes: {
-      en: ['Flights', 'Meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบิน', 'ค่าอาหาร', 'ประกันการเดินทาง'],
+      en: ['Flights (we coordinate booking)', 'Meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบิน (เราช่วยจอง)', 'ค่าอาหาร', 'ประกันการเดินทาง'],
     },
   },
   'TAS-LH-4D3N': {
     tagline: {
-      en: 'Summer Tasmania — lavender fields, Cradle Mountain, and aurora missions.',
-      th: 'แทสเมเนียฤดูร้อน — ทุ่งลาเวนเดอร์ Cradle Mountain และภารกิจล่าแสงใต้',
+      en: 'Launceston to Hobart, fully coordinated — lavender, Cradle Mountain, aurora missions. Fly in; we do the rest.',
+      th: 'Launceston ถึง Hobart ประสานครบ — ลาเวนเดอร์ Cradle Mountain ล่าแสงใต้ บินมา ที่เหลือเราจัดให้',
     },
     highlights: {
       en: ['Bridestowe Lavender', 'Cradle Mountain', 'MONA & Mt Wellington aurora'],
       th: ['Bridestowe Lavender', 'Cradle Mountain', 'MONA & ล่าแสงใต้ Mt Wellington'],
     },
     includes: {
-      en: ['Vehicle Launceston–Hobart', 'Photographer mentor', 'Lavender & MONA tickets'],
-      th: ['รถ Launceston–Hobart', 'ช่างภาพ Mentor', 'ตั๋วลาเวนเดอร์ & MONA'],
+      en: ['Vehicle Launceston–Hobart', 'Photographer mentor', 'Lavender & MONA tickets', 'Flight & accommodation booking assistance'],
+      th: ['รถ Launceston–Hobart', 'ช่างภาพ Mentor', 'ตั๋วลาเวนเดอร์ & MONA', 'ช่วยจองตั๋วเครื่องบินและที่พัก'],
     },
     excludes: {
-      en: ['Flights', 'Meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบิน', 'ค่าอาหาร', 'ประกันการเดินทาง'],
+      en: ['Flights (we coordinate booking)', 'Meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบิน (เราช่วยจอง)', 'ค่าอาหาร', 'ประกันการเดินทาง'],
     },
   },
   'TAS-SU-4D3N': {
     tagline: {
-      en: 'East coast summer highlights — Wineglass Bay, Freycinet, and Bay of Fires.',
-      th: 'ไฮไลท์ชายฝั่งตะวันออกฤดูร้อน — Wineglass Bay Freycinet และ Bay of Fires',
+      en: 'East coast Tasmania — Wineglass Bay to Bay of Fires. Flights & stays coordinated; you travel light.',
+      th: 'แทสฝั่งตะวันออก — Wineglass Bay ถึง Bay of Fires จองตั๋วและที่พักให้ คุณแค่เตรียมกระเป๋า',
     },
     highlights: {
       en: ['Wineglass Bay lookout', 'Freycinet National Park', 'Bay of Fires orange rocks'],
       th: ['Wineglass Bay', 'Freycinet National Park', 'Bay of Fires หินสีส้ม'],
     },
     includes: {
-      en: ['Vehicle & driver', 'Pro photographer', 'National park fees'],
-      th: ['รถและคนขับ', 'ช่างภาพมืออาชีพ', 'ค่าเข้าอุทยาน'],
+      en: ['Vehicle & driver', 'Pro photographer', 'National park fees', 'Flight & accommodation booking assistance'],
+      th: ['รถและคนขับ', 'ช่างภาพมืออาชีพ', 'ค่าเข้าอุทยาน', 'ช่วยจองตั๋วเครื่องบินและที่พัก'],
     },
     excludes: {
-      en: ['Flights', 'Meals', 'Travel insurance'],
-      th: ['ตั๋วเครื่องบิน', 'ค่าอาหาร', 'ประกันการเดินทาง'],
+      en: ['Flights (we coordinate booking)', 'Meals', 'Travel insurance'],
+      th: ['ตั๋วเครื่องบิน (เราช่วยจอง)', 'ค่าอาหาร', 'ประกันการเดินทาง'],
     },
   },
   'BER-3D2N': {
     tagline: {
-      en: 'NSW south coast drama — Horse Head Rock, Blue Pool, and coastal golden hour.',
-      th: 'ชายฝั่งใต้ NSW สุดอลังการ — Horse Head Rock Blue Pool และ Golden Hour',
+      en: 'South coast with your crew — we handle transport & timing, you get the dramatic shots.',
+      th: 'ชายฝั่งใต้กับเพื่อนๆ — เราจัดรถและจังหวะเวลา คุณได้แต่รูปสวยอลังการ ไม่ต้องขับรถเอง',
     },
     highlights: {
       en: ['Horse Head Rock (low tide)', 'Blue Pool Bermagui', 'Wallaga Lake sunsets'],
@@ -137,8 +169,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'CAN-2D1N': {
     tagline: {
-      en: 'Spring canola fields — golden blooms near Cowra & Canowindra.',
-      th: 'ทุ่งคาโนล่าฤดูใบไม้ผลิ — ดอกเหลืองทองใกล้ Cowra & Canowindra',
+      en: 'Canola fields weekend — road trip without owning a car, spring gold guaranteed.',
+      th: 'ทุ่งคาโนล่าสุดสัปดาห์ — ออกทริปโดยไม่ต้องมีรถ ฤดูใบไม้ผลิสีทองแน่นอน มากับเพื่อนๆ สบายๆ',
     },
     highlights: {
       en: ['Canola field photo spots', 'Cowra & Canowindra old towns', 'Cowra Japanese Garden (optional)'],
@@ -155,8 +187,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'KIA-1DAY': {
     tagline: {
-      en: 'Winter coastal day trip — Helensburgh Station to Bombo Headland.',
-      th: 'ทริปวันเดียวชายฝั่งฤดูหนาว — จาก Helensburgh Station ถึง Bombo Headland',
+      en: 'Kiama & Bombo in a day — hop in from Thai Town, come back with banger coastal shots.',
+      th: 'Kiama & Bombo วันเดียวจบ — นั่งรถจาก Thai Town กลับมาพร้อมรูปชายฝั่งสวยๆ ไม่ต้องขับเอง',
     },
     highlights: {
       en: ['Helensburgh Old Station', 'Seacliff Bridge', 'Bombo Headland Quarry'],
@@ -173,8 +205,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'PSP-1DAY': {
     tagline: {
-      en: 'Blue Mountains day escape — Three Sisters and sunset lookouts.',
-      th: 'ทริปวันเดียว Blue Mountains — Three Sisters และจุดชมพระอาทิตย์ตก',
+      en: 'Blue Mountains escape — easy day trip from Sydney, Instagram-ready shots included.',
+      th: 'หลบเมือง Blue Mountains — ทริปวันเดียวจากซิดนีย์ ได้รูปสวยพร้อมโพสต์ ไม่ต้องขับรถเอง',
     },
     highlights: {
       en: ['Three Sisters Echo Point', 'Govetts Leap', 'Sunset lookouts'],
@@ -191,8 +223,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'LAV-ANB-1D': {
     tagline: {
-      en: 'Anna Bay dunes & coastal portraits — golden hour by the sea.',
-      th: 'เนินทราย Anna Bay & ถ่ายภาพริมทะเล — Golden Hour ริมชายหาด',
+      en: 'Dunes & beach portraits — affordable half-day vibes with a pro behind the lens.',
+      th: 'เนินทราย & ถ่ายริมทะเล — ทริปครึ่งวันราคาดี มีช่างภาพมืออาชีพดูแล ไม่ต้องขับรถเอง',
     },
     highlights: {
       en: ['Anna Bay sand dunes', 'Coastal portrait locations', 'Golden hour session'],
@@ -209,8 +241,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'SYD-MW-WIN': {
     tagline: {
-      en: 'Winter Milky Way hunt — dark sky portraits around Sydney.',
-      th: 'ล่าทางช้างเผือกฤดูหนาว — ถ่ายภาพท้องฟ้ามืดรอบซิดนีย์',
+      en: 'Milky Way night out with mates — we drive, you shoot, no gear stress.',
+      th: 'ออกล่าทางช้างเผือกกับเพื่อนๆ — เราขับรถให้ คุณแค่ถ่ายรูป ไม่ต้องเครียดเรื่องรถ',
     },
     highlights: {
       en: ['Dark sky locations', 'Milky Way portraits', 'Astro camera coaching'],
@@ -227,8 +259,8 @@ export const TRIP_DETAILS: Record<string, TripDetailContent> = {
   },
   'SYD-1DAY': {
     tagline: {
-      en: 'Sydney hidden gems — city icons, Anna Bay dunes, or Milky Way packages.',
-      th: 'มุมลับซิดนีย์ — แลนด์มาร์กเมือง เนินทราย Anna Bay หรือแพ็กล่าทางช้างเผือก',
+      en: 'Sydney day trip with friends — no driving, curated photo spots, mentor on tap.',
+      th: 'ทริปวันเดียวซิดนีย์กับเพื่อน — ไม่ต้องขับรถเอง จุดถ่ายคัดแล้ว มีช่างภาพคอยแนะนำ',
     },
     highlights: {
       en: ['Sydney 5 best photo locations', 'Anna Bay sand dunes', 'Milky Way hunt (winter)'],

@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, Sparkles } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Sparkles } from 'lucide-react'
 import { useLang } from '../../hooks/useLang'
 import { fetchTourByCode, formatAud, formatDate, seatsRemaining } from '../../lib/toursApi'
 import { getTripDetails, listFor, textFor } from '../../data/tripDetails'
+import { getItinerary } from '../../data/itineraries'
+import { isPremiumTrip } from '../../data/tripTiers'
 import { AURORA_DISCLAIMER } from '../../data/risks'
 import type { Tour } from '../../types/tour'
 import { Skeleton } from '../../components/ui/Skeleton'
 import { PageError } from '../../components/ui/PageError'
 import TripPhotoHero from '../../components/trips/TripPhotoHero'
 import TripBookButton from '../../components/trips/TripBookButton'
+import AuroraTracker from '../../components/trips/AuroraTracker'
+import TripTimeline from '../../components/trips/TripTimeline'
+import PremiumTripCallout from '../../components/trips/PremiumTripCallout'
 
 export default function TripDetailPage() {
   const { tripCode } = useParams<{ tripCode: string }>()
@@ -35,8 +40,8 @@ export default function TripDetailPage() {
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-8 w-full" />
         <Skeleton className="h-4 w-2/3" />
-        <Skeleton className="h-32 w-full rounded-xl" />
-        <Skeleton className="h-48 w-full rounded-xl" />
+        <Skeleton className="h-32 w-full rounded-editorial" />
+        <Skeleton className="h-48 w-full rounded-editorial" />
       </div>
     )
   }
@@ -52,67 +57,89 @@ export default function TripDetailPage() {
   const includes = details ? listFor(details.includes, lang) : []
   const excludes = details ? listFor(details.excludes, lang) : []
   const tagline = details ? textFor(details.tagline, lang) : ''
+  const itinerary = getItinerary(
+    tour.trip_code,
+    details?.highlights,
+    tour.duration_label,
+  )
 
   return (
     <div className="space-y-6 pb-4">
-      <Link to="/trips" className="inline-flex items-center gap-1 text-sm text-brand-green">
+      <Link to="/trips" className="inline-flex items-center gap-1 text-sm text-deep-green">
         <ArrowLeft className="h-4 w-4" />
         {t('nav.trips')}
       </Link>
 
-      <TripPhotoHero
-        tripCode={tour.trip_code}
-        alt={name}
-        className="aspect-[16/10] w-full rounded-2xl"
-      />
+      <div className="relative overflow-hidden rounded-editorial">
+        <TripPhotoHero tripCode={tour.trip_code} alt={name} className="aspect-[16/10] w-full" />
+        <div className="absolute inset-0 bg-gradient-to-t from-near-black-green/80 to-transparent" />
+        <div className="absolute bottom-0 p-4">
+          <p className="text-[10px] uppercase tracking-wider text-cream-muted">{tour.trip_code}</p>
+          <h1 className="font-serif text-2xl text-cream">{name}</h1>
+          <p className="text-xs text-cream-muted">
+            {tour.destination} · {tour.duration_label}
+          </p>
+        </div>
+      </div>
 
-      <header>
-        <p className="text-xs font-mono text-gray-400">{tour.trip_code}</p>
-        <h1 className="mt-1 text-2xl font-bold text-brand-dark">{name}</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          {tour.destination} · {tour.duration_label}
-        </p>
-        {tagline && <p className="mt-3 text-sm text-gray-600">{tagline}</p>}
-      </header>
+      {tagline && <p className="text-sm text-brand-dark/80">{tagline}</p>}
 
-      <div className="rounded-xl border border-gray-100 bg-brand-green-light p-4">
+      {isPremiumTrip(tour.trip_code) && <PremiumTripCallout tripCode={tour.trip_code} />}
+
+      <div className="rounded-editorial border border-gold/40 bg-gold/10 p-4">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs text-gray-500">{t('common.standard')}</p>
-            <p className="text-2xl font-bold text-brand-green">{formatAud(tour.price_standard)}</p>
+            <p className="text-xs uppercase tracking-wider text-cream-muted">{t('common.standard')}</p>
+            <p className="font-serif text-3xl text-gold-dark">{formatAud(tour.price_standard)}</p>
           </div>
           {tour.price_private != null && (
             <div className="text-right">
-              <p className="text-xs text-gray-500">{t('common.private')}</p>
-              <p className="text-lg font-semibold text-brand-dark">{formatAud(tour.price_private)}</p>
+              <p className="text-xs text-cream-muted">{t('common.private')}</p>
+              <p className="font-serif text-lg text-brand-dark">{formatAud(tour.price_private)}</p>
             </div>
           )}
         </div>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm text-brand-dark/70">
           {t('booking.deposit')}: {formatAud(tour.deposit_amount)} ·{' '}
           {formatDate(tour.next_date, lang)} · {seats} {t('common.seatsRemaining')}
         </p>
       </div>
 
+      {/* Booking CTA — above the fold priority */}
+      <TripBookButton tour={tour} className="py-3.5" variant="primary" />
+
+      <Link
+        to={`/trips/${tour.trip_code}/prep`}
+        className="flex items-center justify-between rounded-editorial border border-deep-green/15 bg-white px-4 py-3 text-sm text-brand-dark transition-colors hover:border-gold/40"
+      >
+        <span>
+          {lang === 'th' ? '🧳 เตรียมตัวก่อนเดินทาง' : '🧳 Trip Preparation'}
+        </span>
+        <ChevronRight className="h-4 w-4 text-gold" />
+      </Link>
+
       {tour.aurora_trip && (
-        <div className="flex gap-2 rounded-xl border border-brand-green/20 bg-brand-green/5 p-4">
-          <Sparkles className="h-5 w-5 shrink-0 text-brand-green" />
-          <div>
-            <p className="text-sm font-semibold text-brand-green">{t('common.aurora')}</p>
-            <p className="mt-1 text-xs text-gray-600">{AURORA_DISCLAIMER[lang]}</p>
+        <>
+          <AuroraTracker />
+          <div className="flex gap-2 rounded-editorial border border-deep-green/20 bg-deep-green/5 p-4">
+            <Sparkles className="h-5 w-5 shrink-0 text-gold" />
+            <div>
+              <p className="text-sm font-medium text-deep-green">{t('common.aurora')}</p>
+              <p className="mt-1 text-xs text-brand-dark/70">{AURORA_DISCLAIMER[lang]}</p>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {highlights.length > 0 && (
         <section>
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-brand-dark">
+          <h2 className="font-serif text-lg text-brand-dark">
             {lang === 'th' ? 'ไฮไลท์' : 'Highlights'}
           </h2>
           <ul className="mt-2 space-y-2">
             {highlights.map((h) => (
-              <li key={h} className="flex gap-2 text-sm text-gray-700">
-                <span className="text-brand-green">·</span>
+              <li key={h} className="flex gap-2 text-sm text-brand-dark/80">
+                <span className="text-gold">·</span>
                 {h}
               </li>
             ))}
@@ -122,11 +149,11 @@ export default function TripDetailPage() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         {includes.length > 0 && (
-          <section className="rounded-xl bg-gray-50 p-4">
-            <h2 className="text-sm font-semibold text-brand-dark">
+          <section className="rounded-editorial border border-deep-green/10 bg-white p-4">
+            <h2 className="text-sm font-medium text-brand-dark">
               {lang === 'th' ? 'รวมในราคา' : 'Included'}
             </h2>
-            <ul className="mt-2 space-y-1 text-sm text-gray-600">
+            <ul className="mt-2 space-y-1 text-sm text-brand-dark/70">
               {includes.map((item) => (
                 <li key={item}>✓ {item}</li>
               ))}
@@ -134,11 +161,11 @@ export default function TripDetailPage() {
           </section>
         )}
         {excludes.length > 0 && (
-          <section className="rounded-xl bg-gray-50 p-4">
-            <h2 className="text-sm font-semibold text-brand-dark">
+          <section className="rounded-editorial border border-deep-green/10 bg-white p-4">
+            <h2 className="text-sm font-medium text-brand-dark">
               {lang === 'th' ? 'ไม่รวม' : 'Not included'}
             </h2>
-            <ul className="mt-2 space-y-1 text-sm text-gray-600">
+            <ul className="mt-2 space-y-1 text-sm text-brand-dark/70">
               {excludes.map((item) => (
                 <li key={item}>✗ {item}</li>
               ))}
@@ -147,7 +174,9 @@ export default function TripDetailPage() {
         )}
       </div>
 
-      <TripBookButton tour={tour} className="py-3.5" />
+      <div className="section-divider" />
+
+      {itinerary && <TripTimeline itinerary={itinerary} nextDate={tour.next_date} />}
     </div>
   )
 }

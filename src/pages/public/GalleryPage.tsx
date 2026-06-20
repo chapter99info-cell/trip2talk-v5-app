@@ -26,7 +26,7 @@ export default function GalleryPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-brand-dark">{t('nav.gallery')}</h1>
+      <h1 className="font-serif text-2xl text-brand-dark">{t('nav.gallery')}</h1>
       <p className="mt-1 text-sm text-gray-500">
         {lang === 'th'
           ? 'ผลงานถ่ายภาพจากทริป Trip2Talk'
@@ -40,7 +40,7 @@ export default function GalleryPage() {
             type="button"
             onClick={() => setCat(tab.id)}
             className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
-              cat === tab.id ? 'bg-brand-green text-white' : 'bg-gray-100 text-gray-600'
+              cat === tab.id ? 'bg-deep-green text-cream' : 'bg-white text-brand-dark/60'
             }`}
           >
             {tab.label}

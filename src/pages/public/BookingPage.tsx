@@ -176,7 +176,7 @@ export default function BookingPage() {
     return (
       <div>
         <p className="text-sm text-gray-600">{t('booking.selectTrip')}</p>
-        <Link to="/trips" className="mt-2 inline-block text-brand-green underline">
+        <Link to="/trips" className="mt-2 inline-block text-deep-green underline">
           {t('nav.trips')}
         </Link>
       </div>
@@ -185,11 +185,11 @@ export default function BookingPage() {
 
   if (reference) {
     return (
-      <div className="rounded-2xl border border-brand-green/30 bg-brand-green-light p-6 text-center">
-        <Check className="mx-auto h-10 w-10 text-brand-green" />
-        <h2 className="mt-3 text-xl font-bold text-brand-dark">{t('booking.confirmation')}</h2>
-        <p className="mt-2 text-sm text-gray-600">{t('booking.success')}</p>
-        <p className="mt-4 font-mono text-lg font-semibold text-brand-green">{reference}</p>
+      <div className="rounded-editorial border border-gold/40 bg-gold/10 p-6 text-center">
+        <Check className="mx-auto h-10 w-10 text-gold" />
+        <h2 className="mt-3 font-serif text-xl text-brand-dark">{t('booking.confirmation')}</h2>
+        <p className="mt-2 text-sm text-brand-dark/70">{t('booking.success')}</p>
+        <p className="mt-4 font-serif text-lg text-gold-dark">{reference}</p>
         <p className="mt-1 text-xs text-gray-500">{t('booking.reference')}</p>
       </div>
     )
@@ -216,12 +216,12 @@ export default function BookingPage() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-      <h1 className="text-2xl font-bold text-brand-dark">{t('booking.summary')}</h1>
+      <h1 className="font-serif text-2xl text-brand-dark">{t('booking.summary')}</h1>
 
-      <div className="rounded-xl border border-gray-100 bg-gray-50 p-4">
-        <p className="font-semibold text-brand-dark">{name}</p>
-        <p className="text-sm text-gray-500">{tour.duration_label}</p>
-        <p className="mt-2 text-lg font-bold text-brand-green">{formatAud(tour.price_standard)}</p>
+      <div className="rounded-editorial border border-gold/40 bg-gold/10 p-4">
+        <p className="font-medium text-brand-dark">{name}</p>
+        <p className="text-sm text-brand-dark/60">{tour.duration_label}</p>
+        <p className="mt-2 font-serif text-2xl text-gold-dark">{formatAud(tour.price_standard)}</p>
         <p className="text-sm text-gray-600">
           {t('booking.deposit')}: {formatAud(tour.deposit_amount)}
         </p>
@@ -263,7 +263,7 @@ export default function BookingPage() {
         <h2 className="text-sm font-semibold text-brand-dark">{t('booking.payment')}</h2>
         <div className="mt-3 flex items-center justify-between rounded-lg bg-gray-50 px-3 py-2">
           <span className="font-mono text-sm">{PAYID_EMAIL}</span>
-          <button type="button" onClick={copyPayId} className="text-brand-green">
+          <button type="button" onClick={copyPayId} className="text-gold">
             {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
           </button>
         </div>
@@ -282,7 +282,7 @@ export default function BookingPage() {
       <button
         type="submit"
         disabled={submitting || !isValid}
-        className="w-full rounded-xl bg-brand-green py-3 text-sm font-semibold text-white disabled:opacity-50"
+        className="btn-primary w-full disabled:opacity-50"
       >
         {submitting ? t('common.loading') : t('btn.submit')}
       </button>

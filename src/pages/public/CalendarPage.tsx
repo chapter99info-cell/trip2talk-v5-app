@@ -8,9 +8,9 @@ import { PageError } from '../../components/ui/PageError'
 
 function borderColor(tour: Tour): string {
   const seats = seatsRemaining(tour)
-  if (seats === 0) return 'border-l-red-500'
-  if (seats <= 3) return 'border-l-orange-500'
-  return 'border-l-brand-green'
+  if (seats === 0) return 'border-l-coral'
+  if (seats <= 3) return 'border-l-amber'
+  return 'border-l-gold'
 }
 
 export default function CalendarPage() {
@@ -34,7 +34,7 @@ export default function CalendarPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-brand-dark">{t('nav.calendar')}</h1>
+      <h1 className="font-serif text-2xl text-brand-dark">{t('nav.calendar')}</h1>
 
       {loading && <div className="mt-6"><ListRowSkeleton count={5} /></div>}
       {error && !loading && (
@@ -59,7 +59,7 @@ export default function CalendarPage() {
                       <p className="font-semibold text-brand-dark">{name}</p>
                       <p className="text-sm text-gray-500">{formatDate(tour.next_date, lang)}</p>
                     </div>
-                    <p className="text-sm font-medium text-brand-green">{formatAud(tour.price_standard)}</p>
+                    <p className="font-serif text-sm text-gold">{formatAud(tour.price_standard)}</p>
                   </div>
                   <p className="mt-2 text-xs text-gray-500">
                     {seats === 0 ? t('common.full') : `${seats} ${t('common.seatsRemaining')}`}
