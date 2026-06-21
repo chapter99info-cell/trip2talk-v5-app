@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLang } from '../../hooks/useLang'
-import { fetchAllTours } from '../../lib/toursApi'
+import { fetchAllTours, sortToursForListing } from '../../lib/toursApi'
 import type { Tour, TripType } from '../../types/tour'
 import TripCard from '../../components/trips/TripCard'
 import { TripCardSkeleton } from '../../components/ui/Skeleton'
@@ -19,6 +19,7 @@ export default function TripsPage() {
     setLoading(true)
     setError('')
     fetchAllTours()
+      .then(sortToursForListing)
       .then(setTours)
       .catch(() => setError(t('common.error')))
       .finally(() => setLoading(false))

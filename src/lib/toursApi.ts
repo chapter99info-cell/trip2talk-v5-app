@@ -24,6 +24,26 @@ export async function fetchAllTours(): Promise<Tour[]> {
   return (data ?? []) as Tour[]
 }
 
+/** Featured trip codes pinned to the top of /trips (in this order). */
+export const TRIPS_LISTING_PRIORITY = ['TAS-3D2N', 'ULU-4D3N', 'NZ-6D5N'] as const
+
+/** Pin priority trips first; preserve Supabase order for the rest. */
+export function sortToursForListing(tours: Tour[]): Tour[] {
+  const priorityRank = new Map(
+    TRIPS_LISTING_PRIORITY.map((code, index) => [code.toUpperCase(), index]),
+  )
+  return tours
+    .map((tour, index) => ({ tour, index }))
+    .sort((a, b) => {
+      const aCode = a.tour.trip_code.toUpperCase()
+      const bCode = b.tour.trip_code.toUpperCase()
+      const aRank = priorityRank.get(aCode) ?? TRIPS_LISTING_PRIORITY.length + a.index
+      const bRank = priorityRank.get(bCode) ?? TRIPS_LISTING_PRIORITY.length + b.index
+      return aRank - bRank
+    })
+    .map(({ tour }) => tour)
+}
+
 export async function fetchConfirmedTours(): Promise<Tour[]> {
   const { data, error } = await supabase
     .from('tours')
