@@ -79,6 +79,19 @@ export type TranslationKey =
   | 'toast.bookingFailed'
   | 'toast.paymentUpdated'
   | 'toast.paymentFailed'
+  | 'contact.findUs'
+  | 'contact.facebook'
+  | 'contact.facebook.sub'
+  | 'contact.messenger'
+  | 'contact.messenger.sub'
+  | 'contact.email'
+  | 'contact.email.sub'
+  | 'contact.phone'
+  | 'contact.phone.sub'
+  | 'contact.line'
+  | 'contact.line.sub'
+  | 'contact.googleReviews'
+  | 'contact.googleReviews.sub'
 
 type Map = Record<TranslationKey, string>
 
@@ -161,6 +174,19 @@ const en: Map = {
   'toast.bookingFailed': 'Booking failed. Please try again.',
   'toast.paymentUpdated': 'Payment status updated',
   'toast.paymentFailed': 'Could not update payment status',
+  'contact.findUs': 'Find us',
+  'contact.facebook': 'Facebook',
+  'contact.facebook.sub': 'Follow us here',
+  'contact.messenger': 'Messenger',
+  'contact.messenger.sub': 'Chat with us',
+  'contact.email': 'Email',
+  'contact.email.sub': 'Send us a message',
+  'contact.phone': 'Call',
+  'contact.phone.sub': '0452 044 382',
+  'contact.line': 'Line',
+  'contact.line.sub': 'Add us on Line',
+  'contact.googleReviews': 'Google Reviews',
+  'contact.googleReviews.sub': 'See our reviews',
 }
 
 const th: Map = {
@@ -242,6 +268,19 @@ const th: Map = {
   'toast.bookingFailed': 'การจองล้มเหลว กรุณาลองใหม่',
   'toast.paymentUpdated': 'อัปเดตสถานะการชำระเงินแล้ว',
   'toast.paymentFailed': 'อัปเดตสถานะไม่สำเร็จ',
+  'contact.findUs': 'ติดต่อเรา',
+  'contact.facebook': 'Facebook',
+  'contact.facebook.sub': 'ติดตามเราได้ที่นี่',
+  'contact.messenger': 'Messenger',
+  'contact.messenger.sub': 'แชทกับเรา',
+  'contact.email': 'อีเมล',
+  'contact.email.sub': 'ส่งข้อความถึงเรา',
+  'contact.phone': 'โทร',
+  'contact.phone.sub': '0452 044 382',
+  'contact.line': 'Line',
+  'contact.line.sub': 'เพิ่มเพื่อนบน Line',
+  'contact.googleReviews': 'Google Reviews',
+  'contact.googleReviews.sub': 'ดูรีวิวจากลูกค้า',
 }
 
 export const translations: Record<Lang, Map> = { en, th }

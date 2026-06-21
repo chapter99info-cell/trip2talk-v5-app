@@ -1,10 +1,17 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Flame } from 'lucide-react'
 import type { Tour } from '../../types/tour'
 import { useLang } from '../../hooks/useLang'
+import { useTripCardPreview } from '../../hooks/useTripCardPreview'
 import { formatAud, seatsRemaining } from '../../lib/toursApi'
+import { getPreviewPhotoForTrip, photoSrc } from '../../data/galleryPhotos'
 import TripPhotoHero from './TripPhotoHero'
 import TripBookButton from './TripBookButton'
+import TripCardPreviewBubble from './TripCardPreviewBubble'
+
+/** Optional per-trip preview video URLs — play icon shows when set */
+export const TRIP_PREVIEW_VIDEOS: Partial<Record<string, string>> = {}
 
 type Props = {
   tour: Tour
@@ -26,10 +33,22 @@ export default function TripCard({ tour }: Props) {
   const seats = seatsRemaining(tour)
   const lowSeats = seats > 0 && seats <= 3
   const badge = tripBadge(tour, lang)
+  const { position, previewHandlers } = useTripCardPreview()
+
+  const previewPhoto = useMemo(() => getPreviewPhotoForTrip(tour.trip_code), [tour.trip_code])
+  const previewSrc = useMemo(
+    () => (previewPhoto ? photoSrc(previewPhoto) : ''),
+    [previewPhoto],
+  )
+  const hasVideo = Boolean(TRIP_PREVIEW_VIDEOS[tour.trip_code])
 
   return (
     <article className="group relative min-h-[22rem] overflow-hidden rounded-editorial">
-      <Link to={`/trips/${tour.trip_code}`} className="absolute inset-0 block">
+      <Link
+        to={`/trips/${tour.trip_code}`}
+        className="absolute inset-0 bottom-[4.5rem] block touch-manipulation"
+        {...previewHandlers}
+      >
         <TripPhotoHero
           tripCode={tour.trip_code}
           alt={name}
@@ -37,6 +56,15 @@ export default function TripCard({ tour }: Props) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
       </Link>
+
+      <TripCardPreviewBubble
+        visible={position.visible}
+        x={position.x}
+        y={position.y}
+        imageSrc={previewSrc}
+        alt={name}
+        hasVideo={hasVideo}
+      />
 
       {badge && (
         <span className="absolute left-3 top-3 z-10 rounded-editorial bg-gold px-2.5 py-1 text-[10px] font-medium uppercase tracking-wider text-gold-dark">

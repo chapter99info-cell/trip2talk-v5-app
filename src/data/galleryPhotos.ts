@@ -163,6 +163,16 @@ export function getHeroPhotoForTrip(tripCode: string): GalleryPhoto | undefined 
   return GALLERY_PHOTOS.find((p) => p.category === category)
 }
 
+/** Alternate gallery photo for hover/long-press preview (differs from card hero when possible) */
+export function getPreviewPhotoForTrip(tripCode: string): GalleryPhoto | undefined {
+  const hero = getHeroPhotoForTrip(tripCode)
+  const category = TRIP_GALLERY_CATEGORY[tripCode.toUpperCase()]
+  if (!category) return hero ?? GALLERY_PHOTOS[0]
+  const inCategory = GALLERY_PHOTOS.filter((p) => p.category === category)
+  const alternate = inCategory.find((p) => p.id !== hero?.id)
+  return alternate ?? hero ?? inCategory[0]
+}
+
 const _photoSrcCache = new Map<string, string>()
 
 export function photoSrc(photo: GalleryPhoto): string {
