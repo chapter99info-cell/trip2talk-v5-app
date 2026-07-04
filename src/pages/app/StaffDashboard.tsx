@@ -1,11 +1,13 @@
 import { useEffect, useState, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { fetchConfirmedTours, fetchBookingsForTour, seatsRemaining } from '../../lib/toursApi'
+import { StaffSessionExpiredError } from '../../lib/supabaseStaff'
 import type { Tour, TourBooking } from '../../types/tour'
 import { ListRowSkeleton } from '../../components/ui/Skeleton'
 import { PageError } from '../../components/ui/PageError'
 
 export default function StaffDashboard() {
+  const navigate = useNavigate()
   const [tours, setTours] = useState<Tour[]>([])
   const [selected, setSelected] = useState<Tour | null>(null)
   const [manifest, setManifest] = useState<TourBooking[]>([])
@@ -30,8 +32,14 @@ export default function StaffDashboard() {
     if (!selected) return
     fetchBookingsForTour(selected.id)
       .then(setManifest)
-      .catch(() => setManifest([]))
-  }, [selected])
+      .catch((err) => {
+        if (err instanceof StaffSessionExpiredError) {
+          navigate('/app')
+          return
+        }
+        setManifest([])
+      })
+  }, [selected, navigate])
 
   const today = new Date().toISOString().slice(0, 10)
   const upcoming = tours.filter((t) => t.next_date && t.next_date >= today)

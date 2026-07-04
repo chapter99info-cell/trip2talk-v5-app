@@ -1,9 +1,10 @@
 import { useEffect, useState, useCallback, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Lock } from 'lucide-react'
-import { fetchStaffByPin } from '../../lib/toursApi'
+import { verifyStaffPin } from '../../lib/toursApi'
 import type { StaffRole } from '../../types/tour'
 import { useLang } from '../../hooks/useLang'
+import { setStaffSession } from '../../lib/supabaseStaff'
 
 const MAX_ATTEMPTS = 3
 const LOCKOUT_MS = 30_000
@@ -57,10 +58,9 @@ export default function PinGatePage() {
       setError('')
 
       try {
-        const staff = await fetchStaffByPin(fullPin)
+        const staff = await verifyStaffPin(fullPin)
         if (staff) {
-          sessionStorage.setItem('staff_role', staff.role)
-          sessionStorage.setItem('staff_name', staff.full_name)
+          setStaffSession(staff.token, staff.role, staff.full_name)
           navigate(redirectForRole(staff.role))
           return
         }

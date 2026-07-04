@@ -1,5 +1,9 @@
 import { supabase } from './supabase'
-import type { Expense, InsuranceAlert, StaffProfile, Tour, TourBooking } from '../types/tour'
+import { callStaffApi } from './supabaseStaff'
+import type { Expense, InsuranceAlert, StaffRole, Tour, TourBooking, WaiverSignature } from '../types/tour'
+
+/** Featured trip codes pinned to the top of home + /trips (in this order). */
+export const TRIPS_LISTING_PRIORITY = ['TAS-3D2N', 'ULU-4D3N', 'NZ-6D5N'] as const
 
 export async function fetchFeaturedTours(limit = 3): Promise<Tour[]> {
   const { data, error } = await supabase
@@ -7,10 +11,9 @@ export async function fetchFeaturedTours(limit = 3): Promise<Tour[]> {
     .select('*')
     .eq('status', 'CONFIRMED')
     .order('next_date', { ascending: true, nullsFirst: false })
-    .limit(limit)
 
   if (error) throw error
-  return (data ?? []) as Tour[]
+  return sortToursForListing((data ?? []) as Tour[]).slice(0, limit)
 }
 
 export async function fetchAllTours(): Promise<Tour[]> {
@@ -23,9 +26,6 @@ export async function fetchAllTours(): Promise<Tour[]> {
   if (error) throw error
   return (data ?? []) as Tour[]
 }
-
-/** Featured trip codes pinned to the top of /trips (in this order). */
-export const TRIPS_LISTING_PRIORITY = ['TAS-3D2N', 'ULU-4D3N', 'NZ-6D5N'] as const
 
 /** Pin priority trips first; preserve Supabase order for the rest. */
 export function sortToursForListing(tours: Tour[]): Tour[] {
@@ -67,25 +67,11 @@ export async function fetchTourByCode(tripCode: string): Promise<Tour | null> {
 }
 
 export async function fetchBookingsForTour(tourId: string): Promise<TourBooking[]> {
-  const { data, error } = await supabase
-    .from('tour_bookings')
-    .select('*')
-    .eq('tour_id', tourId)
-    .order('booked_at', { ascending: false })
-
-  if (error) throw error
-  return (data ?? []) as TourBooking[]
+  return callStaffApi<TourBooking[]>('list_bookings_for_tour', { tourId })
 }
 
 export async function fetchPendingBookings(): Promise<TourBooking[]> {
-  const { data, error } = await supabase
-    .from('tour_bookings')
-    .select('*')
-    .eq('booking_status', 'PENDING')
-    .order('booked_at', { ascending: false })
-
-  if (error) throw error
-  return (data ?? []) as TourBooking[]
+  return callStaffApi<TourBooking[]>('list_pending_bookings')
 }
 
 export async function updateBookingStatus(
@@ -93,11 +79,20 @@ export async function updateBookingStatus(
   status: TourBooking['booking_status'],
   amountPaid?: number,
 ): Promise<void> {
-  const payload: Partial<TourBooking> = { booking_status: status }
-  if (amountPaid !== undefined) payload.amount_paid_aud = amountPaid
+  await callStaffApi('update_booking_status', { id, status, amountPaid })
+}
 
-  const { error } = await supabase.from('tour_bookings').update(payload).eq('id', id)
+export async function insertWaiverSignature(
+  signature: Omit<WaiverSignature, 'id' | 'created_at'>,
+): Promise<WaiverSignature> {
+  const { data, error } = await supabase
+    .from('waiver_signatures')
+    .insert(signature)
+    .select()
+    .single()
+
   if (error) throw error
+  return data as WaiverSignature
 }
 
 export async function insertBooking(
@@ -113,54 +108,48 @@ export async function insertBooking(
   return data as TourBooking
 }
 
-export async function fetchStaffByPin(pin: string): Promise<StaffProfile | null> {
-  const { data, error } = await supabase
-    .from('staff_profiles')
-    .select('*')
-    .eq('pin_code', pin)
-    .maybeSingle()
+export interface StaffAuthResult {
+  token: string
+  role: StaffRole
+  full_name: string
+}
 
-  if (error) throw error
-  return data as StaffProfile | null
+/**
+ * Verifies a PIN via the verify-pin Edge Function (bcrypt compare happens
+ * server-side with the service-role key — the browser never sees pin_hash).
+ * Returns null on invalid PIN, throws on network/server failure.
+ */
+export async function verifyStaffPin(pin: string): Promise<StaffAuthResult | null> {
+  const url = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/verify-pin`
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+    },
+    body: JSON.stringify({ pin }),
+  })
+
+  if (res.status === 401) return null
+  if (!res.ok) throw new Error(`verify-pin failed: ${res.status}`)
+
+  return (await res.json()) as StaffAuthResult
 }
 
 export async function fetchExpensesThisMonth(): Promise<Expense[]> {
-  const start = new Date()
-  start.setDate(1)
-  start.setHours(0, 0, 0, 0)
-
-  const { data, error } = await supabase
-    .from('expenses')
-    .select('*')
-    .gte('created_at', start.toISOString())
-
-  if (error) throw error
-  return (data ?? []) as Expense[]
+  return callStaffApi<Expense[]>('expenses_this_month')
 }
 
 export async function fetchBookingsThisMonth(): Promise<TourBooking[]> {
-  const start = new Date()
-  start.setDate(1)
-  start.setHours(0, 0, 0, 0)
-
-  const { data, error } = await supabase
-    .from('tour_bookings')
-    .select('*')
-    .gte('booked_at', start.toISOString())
-
-  if (error) throw error
-  return (data ?? []) as TourBooking[]
+  return callStaffApi<TourBooking[]>('bookings_this_month')
 }
 
 export async function fetchInsuranceAlerts(): Promise<InsuranceAlert[]> {
-  const { data, error } = await supabase
-    .from('insurance_alerts')
-    .select('*')
-    .eq('is_active', true)
-    .order('expiry_date', { ascending: true })
+  return callStaffApi<InsuranceAlert[]>('insurance_alerts')
+}
 
-  if (error) throw error
-  return (data ?? []) as InsuranceAlert[]
+export async function insertExpense(expense: Omit<Expense, 'id' | 'created_at'>): Promise<Expense> {
+  return callStaffApi<Expense>('insert_expense', expense)
 }
 
 export async function uploadPaymentSlip(file: File, bookingRef: string): Promise<string> {

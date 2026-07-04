@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { fetchPendingBookings, fetchTourByCode, updateBookingStatus } from '../../lib/toursApi'
+import { StaffSessionExpiredError } from '../../lib/supabaseStaff'
 import type { TourBooking } from '../../types/tour'
 import { ListRowSkeleton } from '../../components/ui/Skeleton'
 import { PageError } from '../../components/ui/PageError'
@@ -10,6 +11,7 @@ import { useLang } from '../../hooks/useLang'
 export default function CashierPOS() {
   const { t } = useLang()
   const { toast } = useToast()
+  const navigate = useNavigate()
   const [bookings, setBookings] = useState<TourBooking[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -19,9 +21,15 @@ export default function CashierPOS() {
     setError('')
     fetchPendingBookings()
       .then(setBookings)
-      .catch(() => setError(t('common.error')))
+      .catch((err) => {
+        if (err instanceof StaffSessionExpiredError) {
+          navigate('/app')
+          return
+        }
+        setError(t('common.error'))
+      })
       .finally(() => setLoading(false))
-  }, [t])
+  }, [t, navigate])
 
   useEffect(() => {
     load()
@@ -38,7 +46,11 @@ export default function CashierPOS() {
       await updateBookingStatus(booking.id, status, amount)
       toast(t('toast.paymentUpdated'), 'success')
       load()
-    } catch {
+    } catch (err) {
+      if (err instanceof StaffSessionExpiredError) {
+        navigate('/app')
+        return
+      }
       toast(t('toast.paymentFailed'), 'error')
     }
   }

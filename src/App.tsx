@@ -14,6 +14,8 @@ import PinGatePage from './pages/app/PinGatePage'
 import StaffDashboard from './pages/app/StaffDashboard'
 import CashierPOS from './pages/app/CashierPOS'
 import OwnerDashboard from './pages/app/OwnerDashboard'
+import ExpenseEntryPage from './pages/app/ExpenseEntryPage'
+import RequireStaffRole from './components/app/RequireStaffRole'
 
 export default function App() {
   return (
@@ -33,9 +35,38 @@ export default function App() {
         </Route>
 
         <Route path="app" element={<PinGatePage />} />
-        <Route path="app/staff" element={<StaffDashboard />} />
-        <Route path="app/cashier" element={<CashierPOS />} />
-        <Route path="app/owner" element={<OwnerDashboard />} />
+        <Route
+          path="app/staff"
+          element={
+            <RequireStaffRole allow={['MANAGER', 'GUIDE', 'OWNER']}>
+              <StaffDashboard />
+            </RequireStaffRole>
+          }
+        />
+        <Route
+          path="app/cashier"
+          element={
+            <RequireStaffRole allow={['CASHIER', 'OWNER']}>
+              <CashierPOS />
+            </RequireStaffRole>
+          }
+        />
+        <Route
+          path="app/owner"
+          element={
+            <RequireStaffRole allow={['OWNER']}>
+              <OwnerDashboard />
+            </RequireStaffRole>
+          }
+        />
+        <Route
+          path="app/expenses/new"
+          element={
+            <RequireStaffRole allow={['OWNER', 'MANAGER']}>
+              <ExpenseEntryPage />
+            </RequireStaffRole>
+          }
+        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

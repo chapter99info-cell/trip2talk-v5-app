@@ -72,3 +72,13 @@ export interface InsuranceAlert {
   expiry_date: string
   is_active: boolean
 }
+
+export interface WaiverSignature {
+  id: string
+  trip_code: string
+  signed_name: string
+  signed_at: string
+  clauses: string[]
+  locale: 'en' | 'th'
+  created_at: string
+}

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useLang } from '../../hooks/useLang'
 import { WAIVER_CLAUSES } from '../../data/risks'
 import { setWaiverSigned } from '../../lib/waiverSession'
+import { insertWaiverSignature } from '../../lib/toursApi'
 import { useToast } from '../../components/ui/Toast'
 
 export default function WaiverPage() {
@@ -38,13 +39,29 @@ export default function WaiverPage() {
 
     setSubmitting(true)
     const signedAt = new Date().toISOString()
+    const clauseIds = clauses.map((c) => c.id)
+    const trimmedName = signedName.trim()
 
     setWaiverSigned(tripCode, {
       tripCode,
-      signedName: signedName.trim(),
+      signedName: trimmedName,
       signedAt,
-      clauses: clauses.map((c) => c.id),
+      clauses: clauseIds,
     })
+
+    try {
+      await insertWaiverSignature({
+        trip_code: tripCode,
+        signed_name: trimmedName,
+        signed_at: signedAt,
+        clauses: clauseIds,
+        locale: lang,
+      })
+    } catch (err) {
+      // The sessionStorage copy above still lets the customer proceed to booking;
+      // log so this doesn't silently vanish, but don't block the flow on it.
+      console.error('[WaiverPage] failed to persist waiver signature:', err)
+    }
 
     toast(t('common.success'), 'success')
     navigate(`/booking?trip=${tripCode}`)
