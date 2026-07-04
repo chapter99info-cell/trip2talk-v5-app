@@ -29,8 +29,23 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
+        // Never precache HTML — stale index.html pins old JS hashes and causes a white screen.
+        globPatterns: ['**/*.{js,css,ico,png,svg,jpg,jpeg,webp}'],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        skipWaiting: true,
+        navigateFallback: '/index.html',
+        navigateFallbackDenylist: [/^\/assets\//, /^\/api\//],
         runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages-cache',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 },
+            },
+          },
           {
             urlPattern: /^https:\/\/xwdtjwzjkqunewxjpimm\.supabase\.co\/.*/i,
             handler: 'NetworkFirst',
