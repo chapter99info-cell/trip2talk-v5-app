@@ -1,30 +1,14 @@
-import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLang } from '../../hooks/useLang'
-import { fetchFeaturedTours } from '../../lib/toursApi'
-import type { Tour } from '../../types/tour'
-import { HomeFeaturedSkeleton } from '../../components/ui/Skeleton'
-import { PageError } from '../../components/ui/PageError'
-import TripCard from '../../components/trips/TripCard'
+import TripTypeCategories from '../../components/trips/TripTypeCategories'
+import HomeFeaturesSection from '../../components/trips/HomeFeaturesSection'
+import HomeCtaFaq from '../../components/trips/HomeCtaFaq'
+
+const HERO_VIDEO_URL =
+  'https://xwdtjwzjkqunewxjpimm.supabase.co/storage/v1/object/public/trip-photos/VDO/t2t%20herocover.mp4'
 
 export default function HomePage() {
-  const { lang, t } = useLang()
-  const [featured, setFeatured] = useState<Tour[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-
-  const load = useCallback(() => {
-    setLoading(true)
-    setError('')
-    fetchFeaturedTours(3)
-      .then(setFeatured)
-      .catch(() => setError(t('common.error')))
-      .finally(() => setLoading(false))
-  }, [t])
-
-  useEffect(() => {
-    load()
-  }, [load])
+  const { t } = useLang()
 
   const stats = [
     { value: '13', label: t('home.stats.trips') },
@@ -34,38 +18,49 @@ export default function HomePage() {
 
   return (
     <div className="-mx-4 space-y-0">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-deep-green to-near-black-green px-5 pb-8 pt-6 text-center">
-        <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-cream-muted">Trip2Talk</p>
-        {lang === 'th' ? (
-          <h1 className="mt-4 font-serif text-3xl leading-snug text-cream sm:text-4xl">
-            ทริปถ่ายภาพ{' '}
-            <em className="text-gold not-italic">ระดับพรีเมียม</em>
+      {/* Cinematic hero */}
+      <section className="relative h-[78svh] min-h-[520px] w-full overflow-hidden bg-near-black-green">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          src={HERO_VIDEO_URL}
+        />
+
+        {/* Legibility overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-near-black-green/70 via-near-black-green/20 to-near-black-green/90" />
+
+        <div className="relative flex h-full flex-col items-center justify-center px-5 text-center">
+          <p className="font-instrument-italic text-sm tracking-wide text-gold">Trip2Talk</p>
+
+          <div className="liquid-glass mt-5 rounded-full px-4 py-2">
+            <p className="text-[11px] text-cream/90 sm:text-xs">{t('home.hero.badge')}</p>
+          </div>
+
+          <h1 className="mt-6 font-serif text-3xl leading-snug text-cream sm:text-4xl">
+            {t('home.hero.title.line1')}
             <br />
-            สำหรับคนไทย
+            <em className="text-gold not-italic">{t('home.hero.title.line2')}</em>
           </h1>
-        ) : (
-          <h1 className="mt-4 font-serif text-3xl leading-snug text-cream sm:text-4xl">
-            Private photo journeys{' '}
-            <em className="text-gold not-italic">at premium level</em>
-            <br />
-            for Thai travellers
-          </h1>
-        )}
-        <p className="mx-auto mt-4 max-w-md text-sm text-cream-muted">
-          {lang === 'th'
-            ? 'กลุ่มเล็ก พร้อมช่างภาพ Mentor — บริการสองภาษา ไทย/อังกฤษ'
-            : 'Small groups with a pro photographer mentor — bilingual TH/EN support'}
-        </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Link to="/trips" className="btn-primary">
-            {t('btn.bookNow')}
-          </Link>
-          <Link to="/gallery" className="btn-ghost">
-            {t('nav.gallery')}
-          </Link>
+
+          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-cream-muted">
+            {t('home.hero.subtitle')}
+          </p>
+
+          <div className="liquid-glass mt-7 flex items-center gap-1 rounded-full p-1.5">
+            <Link to="/trips" className="btn-primary !py-2.5">
+              {t('btn.bookNow')}
+            </Link>
+            <Link to="/gallery" className="btn-ghost !border-white/25 !py-2.5">
+              {t('nav.gallery')}
+            </Link>
+          </div>
         </div>
       </section>
+
+      <TripTypeCategories />
 
       {/* Stats strip */}
       <section className="grid grid-cols-3 divide-x divide-white/8 bg-near-black-green px-2 py-5">
@@ -77,49 +72,10 @@ export default function HomePage() {
         ))}
       </section>
 
+      <HomeFeaturesSection />
+
       <div className="space-y-10 bg-cream px-4 py-10 text-brand-dark">
-        <div className="section-divider" />
-
-        <section>
-          <h2 className="font-serif text-xl text-brand-dark">{t('home.featured')}</h2>
-          {loading && (
-            <div className="mt-4">
-              <HomeFeaturedSkeleton />
-            </div>
-          )}
-          {error && !loading && (
-            <div className="mt-4">
-              <PageError message={error} onRetry={load} />
-            </div>
-          )}
-          {!loading && !error && (
-            <div className="mt-4 space-y-4">
-              {featured.map((trip) => (
-                <TripCard key={trip.id} tour={trip} />
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section>
-          <h2 className="font-serif text-xl text-brand-dark">{t('home.audience.title')}</h2>
-          <div className="mt-4 grid grid-cols-2 gap-3">
-            {[
-              { key: 'home.audience.students' as const, emoji: '🎓' },
-              { key: 'home.audience.residents' as const, emoji: '🏡' },
-              { key: 'home.audience.couples' as const, emoji: '💑' },
-              { key: 'home.audience.groups' as const, emoji: '👥' },
-            ].map(({ key, emoji }) => (
-              <div
-                key={key}
-                className="rounded-editorial border border-deep-green/10 bg-white p-4 text-center"
-              >
-                <span className="text-2xl">{emoji}</span>
-                <p className="mt-2 text-sm font-medium text-brand-dark">{t(key)}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <HomeCtaFaq />
       </div>
     </div>
   )

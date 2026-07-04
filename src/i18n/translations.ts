@@ -51,7 +51,47 @@ export type TranslationKey =
   | 'home.stats.trips'
   | 'home.stats.group'
   | 'home.stats.photographers'
+  | 'home.hero.badge'
+  | 'home.hero.title.line1'
+  | 'home.hero.title.line2'
+  | 'home.hero.subtitle'
+  | 'home.hero.destination.tasmania'
+  | 'home.hero.destination.uluru'
+  | 'home.hero.destination.sydney'
+  | 'home.hero.destination.newZealand'
+  | 'home.category.title'
+  | 'home.category.viewPrefix'
+  | 'home.cta.title.line1'
+  | 'home.cta.title.line2'
+  | 'home.cta.subtitle'
+  | 'home.faq.title'
+  | 'home.faq.q1'
+  | 'home.faq.a1'
+  | 'home.faq.q2'
+  | 'home.faq.a2'
+  | 'home.faq.q3'
+  | 'home.faq.a3'
+  | 'home.faq.q4'
+  | 'home.faq.a4'
+  | 'home.faq.q5'
+  | 'home.faq.a5'
+  | 'home.faq.q6'
+  | 'home.faq.a6'
   | 'home.featured'
+  | 'home.features.title'
+  | 'home.features.toggle.title'
+  | 'home.features.toggle.desc'
+  | 'home.features.price.unit'
+  | 'home.features.price.note'
+  | 'home.features.price.notePrivate'
+  | 'home.features.list.1'
+  | 'home.features.list.2'
+  | 'home.features.list.3'
+  | 'home.features.list.4'
+  | 'home.features.duration'
+  | 'home.features.cta'
+  | 'home.features.footer.title'
+  | 'home.features.footer.sub'
   | 'home.audience.title'
   | 'home.audience.students'
   | 'home.audience.residents'
@@ -92,6 +132,21 @@ export type TranslationKey =
   | 'contact.line.sub'
   | 'contact.googleReviews'
   | 'contact.googleReviews.sub'
+  | 'footer.tagline.line1'
+  | 'footer.tagline.line2'
+  | 'footer.social.label'
+  | 'footer.lucky.text'
+  | 'footer.nav.title1'
+  | 'footer.nav.title2'
+  | 'footer.info.terms'
+  | 'footer.info.contact'
+  | 'footer.info.portal'
+  | 'footer.bottom.cta.line1'
+  | 'footer.bottom.cta.line2'
+  | 'footer.subscribe.placeholder'
+  | 'footer.subscribe.button'
+  | 'footer.subscribe.toast'
+  | 'footer.copyright'
 
 type Map = Record<TranslationKey, string>
 
@@ -146,7 +201,55 @@ const en: Map = {
   'home.stats.trips': '13 Trips',
   'home.stats.group': '100% Small Group',
   'home.stats.photographers': 'Local Photographers',
+  'home.hero.badge': '13 curated trips · small groups only · pro photographer on every trip',
+  'home.hero.title.line1': 'Photo journeys',
+  'home.hero.title.line2': 'worth remembering',
+  'home.hero.subtitle':
+    'From aurora hunts in Tasmania to sunrise over Uluru — private, small-group trips with a professional photographer, built for Thai travellers in Australia.',
+  'home.hero.destination.tasmania': 'Tasmania',
+  'home.hero.destination.uluru': 'Uluru',
+  'home.hero.destination.sydney': 'Sydney',
+  'home.hero.destination.newZealand': 'New Zealand',
+  'home.category.title': 'Find your trip',
+  'home.category.viewPrefix': 'View',
+  'home.cta.title.line1': 'Ready for Your Next',
+  'home.cta.title.line2': 'Photo Adventure?',
+  'home.cta.subtitle': 'Small groups, real photographers, unforgettable trips',
+  'home.faq.title': 'Frequently Asked Questions',
+  'home.faq.q1': "What's included in the trip price?",
+  'home.faq.a1':
+    'Private transport with a driver, a professional photographer for the whole trip, drinking water, and park/entry fees where listed. Flights, meals, and travel insurance are not included unless stated on the specific trip page.',
+  'home.faq.q2': 'Do I need OSHC or travel insurance?',
+  'home.faq.a2':
+    "We strongly recommend it, and student-visa holders must confirm their OSHC covers domestic travel. Trip2Talk isn't a substitute for insurance — see the waiver for full details.",
+  'home.faq.q3': 'How big are the groups?',
+  'home.faq.a3':
+    'Small by design — usually 4 to 6 people per trip. Some premium trips can run as a private group of 2-3 at a higher rate; check the specific trip page.',
+  'home.faq.q4': 'Can I get a private room?',
+  'home.faq.a4':
+    'Standard trips include shared dormitory-style accommodation. Private room upgrades are available on most trips for an extra cost per night — message us before booking to arrange it.',
+  'home.faq.q5': "What if the aurora or Milky Way doesn't show?",
+  'home.faq.a5':
+    'Aurora and Milky Way sightings depend on nature — clear skies, solar activity (KP index), and no light pollution. We choose the best known viewing spots and timing, but sightings are never guaranteed and are not refundable if conditions don\'t cooperate.',
+  'home.faq.q6': 'How do I pay, and what if I need to cancel?',
+  'home.faq.a6':
+    'Book via PayID with a deposit to secure your seat, then pay the balance before departure. Cancellation and refund terms vary by trip and are shown on the digital waiver before you confirm.',
   'home.featured': 'Featured Trips',
+  'home.features.title': 'Trip rate',
+  'home.features.toggle.title': 'Want a private group?',
+  'home.features.toggle.desc':
+    'Upgrade to a private seat block with your own photographer focus and flexible timing on the day.',
+  'home.features.price.unit': '/ person',
+  'home.features.price.note': 'Standard seat',
+  'home.features.price.notePrivate': 'Private upgrade',
+  'home.features.list.1': 'Small group of 6 max',
+  'home.features.list.2': 'Pro photographer on every trip',
+  'home.features.list.3': 'Private transport included',
+  'home.features.list.4': 'Edited photo set after the trip',
+  'home.features.duration': '3D2N typical',
+  'home.features.cta': 'Book a trip',
+  'home.features.footer.title': 'Trip2Talk Pricing',
+  'home.features.footer.sub': 'Pricing',
   'home.audience.title': 'Who is this trip for?',
   'home.audience.students': 'Thai Students',
   'home.audience.residents': 'PR & Residents',
@@ -187,6 +290,21 @@ const en: Map = {
   'contact.line.sub': 'Add us on Line',
   'contact.googleReviews': 'Google Reviews',
   'contact.googleReviews.sub': 'See our reviews',
+  'footer.tagline.line1': 'Private photo journeys,',
+  'footer.tagline.line2': 'led by real photographers.',
+  'footer.social.label': 'Stay in touch!',
+  'footer.lucky.text': 'Book now!',
+  'footer.nav.title1': 'Navigation',
+  'footer.nav.title2': 'Info',
+  'footer.info.terms': 'Booking Terms',
+  'footer.info.contact': 'Contact Us',
+  'footer.info.portal': 'Staff Portal',
+  'footer.bottom.cta.line1': 'Light moves fast.',
+  'footer.bottom.cta.line2': "Book before it's gone.",
+  'footer.subscribe.placeholder': 'Enter your email',
+  'footer.subscribe.button': 'Subscribe',
+  'footer.subscribe.toast': "Thanks! We'll be in touch.",
+  'footer.copyright': '© 2025 Trip2Talk. All rights reserved.',
 }
 
 const th: Map = {
@@ -240,7 +358,55 @@ const th: Map = {
   'home.stats.trips': '13 ทริป',
   'home.stats.group': 'กลุ่มเล็ก 100%',
   'home.stats.photographers': 'ช่างภาพท้องถิ่น',
+  'home.hero.badge': '13 ทริปคัดสรร · กลุ่มเล็กเท่านั้น · มีช่างภาพมืออาชีพทุกทริป',
+  'home.hero.title.line1': 'ทริปถ่ายภาพ',
+  'home.hero.title.line2': 'ที่คุณจะไม่มีวันลืม',
+  'home.hero.subtitle':
+    'ตั้งแต่ล่าแสงใต้ที่แทสเมเนีย ถึงพระอาทิตย์ขึ้นที่อูลูรู — ทริปกลุ่มเล็กส่วนตัว พร้อมช่างภาพมืออาชีพ ออกแบบมาเพื่อคนไทยในออสเตรเลียโดยเฉพาะ',
+  'home.hero.destination.tasmania': 'แทสเมเนีย',
+  'home.hero.destination.uluru': 'อูลูรู',
+  'home.hero.destination.sydney': 'ซิดนีย์',
+  'home.hero.destination.newZealand': 'นิวซีแลนด์',
+  'home.category.title': 'เลือกทริปที่ใช่',
+  'home.category.viewPrefix': 'ดูทริป',
+  'home.cta.title.line1': 'พร้อมสำหรับทริปถ่ายภาพ',
+  'home.cta.title.line2': 'ครั้งต่อไปหรือยัง?',
+  'home.cta.subtitle': 'กลุ่มเล็ก ช่างภาพจริง ทริปที่คุณจะไม่มีวันลืม',
+  'home.faq.title': 'คำถามที่พบบ่อย',
+  'home.faq.q1': 'ราคาทริปรวมอะไรบ้าง?',
+  'home.faq.a1':
+    'รถส่วนตัวพร้อมคนขับ, ช่างภาพมืออาชีพตลอดทริป, น้ำดื่ม และค่าเข้าอุทยาน/สถานที่ตามที่ระบุ ไม่รวมตั๋วเครื่องบิน อาหาร และประกันการเดินทาง เว้นแต่จะระบุไว้ในหน้าทริปนั้นๆ',
+  'home.faq.q2': 'ต้องมีประกัน OSHC หรือประกันการเดินทางไหม?',
+  'home.faq.a2':
+    'แนะนำอย่างยิ่งให้มี และผู้ถือวีซ่านักเรียนต้องยืนยันว่า OSHC ของตัวเองครอบคลุมการเดินทางในประเทศ Trip2Talk ไม่ใช่ประกัน — ดูรายละเอียดเต็มในเอกสาร waiver',
+  'home.faq.q3': 'กลุ่มขนาดเท่าไหร่?',
+  'home.faq.a3':
+    'เน้นกลุ่มเล็กโดยตั้งใจ — ปกติ 4-6 คนต่อทริป บางทริปพรีเมียมสามารถจัดแบบส่วนตัว 2-3 คนได้ในราคาที่สูงขึ้น เช็คในหน้าทริปนั้นๆ',
+  'home.faq.q4': 'ขอห้องพักส่วนตัวได้ไหม?',
+  'home.faq.a4':
+    'ทริปมาตรฐานพักแบบห้องรวม (Dormitory) อัปเกรดเป็นห้องส่วนตัวได้ในเกือบทุกทริปโดยจ่ายเพิ่มต่อคืน — ทักแชทมาก่อนจองเพื่อจัดการให้',
+  'home.faq.q5': 'ถ้าไม่เห็นแสงใต้หรือทางช้างเผือกล่ะ?',
+  'home.faq.a5':
+    'การเห็นแสงใต้หรือทางช้างเผือกขึ้นอยู่กับธรรมชาติ — ท้องฟ้าโปร่ง กิจกรรมสุริยะ (KP index) และไม่มีแสงรบกวน เราเลือกจุดและเวลาที่ดีที่สุดให้แล้ว แต่ไม่สามารถการันตีได้ และไม่มีการคืนเงินหากสภาพอากาศไม่เป็นใจ',
+  'home.faq.q6': 'จ่ายเงินยังไง แล้วถ้าต้องยกเลิกล่ะ?',
+  'home.faq.a6':
+    'จองผ่าน PayID พร้อมมัดจำเพื่อล็อคที่นั่ง แล้วจ่ายส่วนที่เหลือก่อนวันเดินทาง เงื่อนไขการยกเลิก/คืนเงินแตกต่างกันไปตามทริป ดูรายละเอียดได้ในเอกสาร waiver ก่อนยืนยันการจอง',
   'home.featured': 'ทริปแนะนำ',
+  'home.features.title': 'ราคาทริป',
+  'home.features.toggle.title': 'อยากได้กลุ่มส่วนตัวไหม?',
+  'home.features.toggle.desc':
+    'อัปเกรดเป็นที่นั่งกลุ่มส่วนตัว พร้อมโฟกัสช่างภาพและความยืดหยุ่นของเวลาในวันทริป',
+  'home.features.price.unit': '/ คน',
+  'home.features.price.note': 'ที่นั่งมาตรฐาน',
+  'home.features.price.notePrivate': 'อัปเกรดส่วนตัว',
+  'home.features.list.1': 'กลุ่มเล็กสูงสุด 6 คน',
+  'home.features.list.2': 'ช่างภาพมืออาชีพทุกทริป',
+  'home.features.list.3': 'รวมรถส่วนตัว',
+  'home.features.list.4': 'ได้ชุดภาพแต่งหลังทริป',
+  'home.features.duration': 'โดยทั่วไป 3D2N',
+  'home.features.cta': 'จองทริป',
+  'home.features.footer.title': 'Trip2Talk Pricing',
+  'home.features.footer.sub': 'ราคา',
   'home.audience.title': 'ทริปนี้เหมาะกับใคร?',
   'home.audience.students': 'นักเรียนไทย',
   'home.audience.residents': 'PR & ผู้พำนัก',
@@ -281,6 +447,21 @@ const th: Map = {
   'contact.line.sub': 'เพิ่มเพื่อนบน Line',
   'contact.googleReviews': 'Google Reviews',
   'contact.googleReviews.sub': 'ดูรีวิวจากลูกค้า',
+  'footer.tagline.line1': 'ทริปถ่ายภาพส่วนตัว,',
+  'footer.tagline.line2': 'นำโดยช่างภาพจริง.',
+  'footer.social.label': 'ติดตามเรา!',
+  'footer.lucky.text': 'จองเลย!',
+  'footer.nav.title1': 'เมนู',
+  'footer.nav.title2': 'ข้อมูล',
+  'footer.info.terms': 'เงื่อนไขการจอง',
+  'footer.info.contact': 'ติดต่อเรา',
+  'footer.info.portal': 'พอร์ทัลพนักงาน',
+  'footer.bottom.cta.line1': 'แสงเคลื่อนเร็ว.',
+  'footer.bottom.cta.line2': 'จองก่อนที่นั่งหมด.',
+  'footer.subscribe.placeholder': 'กรอกอีเมลของคุณ',
+  'footer.subscribe.button': 'สมัคร',
+  'footer.subscribe.toast': 'ขอบคุณ! เราจะติดต่อกลับเร็วๆ นี้',
+  'footer.copyright': '© 2025 Trip2Talk. สงวนลิขสิทธิ์.',
 }
 
 export const translations: Record<Lang, Map> = { en, th }

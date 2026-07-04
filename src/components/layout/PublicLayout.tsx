@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Calendar, Home, Image, Lock, Menu, X } from 'lucide-react'
 import { useLang } from '../../hooks/useLang'
 import InstallPrompt from '../InstallPrompt'
-import ContactChannels from '../contact/ContactChannels'
+import PublicFooter from './PublicFooter'
 
 const menuLinks = [
   { to: '/trips', key: 'nav.trips' as const },
@@ -121,11 +121,7 @@ export default function PublicLayout() {
 
       <InstallPrompt />
 
-      <footer className="border-t border-white/8 bg-near-black-green px-4 pb-24 pt-4 text-center text-[10px] text-cream-muted">
-        <ContactChannels variant="dark" />
-        <p>Trip2Talk · Chapter 99 Photography</p>
-        <p className="mt-1">33/14 Jubilee Ave, Warriewood NSW 2102 · ABN 81 951 461 769</p>
-      </footer>
+      <PublicFooter />
     </div>
   )
 }

@@ -20,6 +20,7 @@ module.exports = {
       fontFamily: {
         serif: ['"Noto Serif"', '"Noto Serif Thai"', 'Georgia', 'serif'],
         sans: ['Inter', 'Sarabun', 'system-ui', 'sans-serif'],
+        hand: ['Caveat', 'cursive'],
       },
       borderRadius: {
         editorial: '4px',

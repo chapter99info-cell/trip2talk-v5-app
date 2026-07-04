@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useLang } from '../../hooks/useLang'
 import { fetchAllTours, sortToursForListing } from '../../lib/toursApi'
 import type { Tour, TripType } from '../../types/tour'
@@ -8,10 +9,17 @@ import { PageError } from '../../components/ui/PageError'
 
 type Filter = 'all' | TripType
 
+const VALID_TYPES: TripType[] = ['oneday', 'overnight', 'multiday']
+
 export default function TripsPage() {
   const { t } = useLang()
+  const [searchParams] = useSearchParams()
+  const typeParam = searchParams.get('type')
+  const initialFilter: Filter =
+    typeParam && VALID_TYPES.includes(typeParam as TripType) ? (typeParam as TripType) : 'all'
+
   const [tours, setTours] = useState<Tour[]>([])
-  const [filter, setFilter] = useState<Filter>('all')
+  const [filter, setFilter] = useState<Filter>(initialFilter)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
